@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @common_param.name %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @common_param.value %>
+</p>
+
+
+<%= link_to 'Edit', edit_common_param_path(@common_param) %> |
+<%= link_to 'Back', common_params_path %>

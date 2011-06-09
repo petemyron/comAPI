@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Method name:</b>
+  <%= @call.method_name %>
+</p>
+
+<p>
+  <b>Endpoint uri:</b>
+  <%= @call.endpoint_uri %>
+</p>
+
+<p>
+  <b>XML:</b>
+  <div class="xml">
+    <pre><%= @call.xml %></pre>
+  </div>
+</p>
+
+
+<%= link_to 'Edit', edit_call_path(@call) %> |
+<%= link_to 'Back', calls_path %>
+

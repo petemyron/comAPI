@@ -1,4 +1,12 @@
 ComAPI::Application.routes.draw do
+
+  match 'calls/:id/execute_request' => 'calls#execute_request', :as => 'execute_request'
+
+  resources :common_params
+
+  resources :calls
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -48,7 +56,7 @@ ComAPI::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  # root :to => "calls#index"
 
   # See how all your routes lay out with "rake routes"
 
@@ -56,3 +64,4 @@ ComAPI::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+

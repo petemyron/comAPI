@@ -1,0 +1,31 @@
+<p>
+  <b>Method name:</b>
+  <%= @call.method_name %>
+</p>
+
+<p>
+  <b>Endpoint uri:</b>
+  <%= @call.endpoint_uri %>
+</p>
+
+<p>
+  <b>XML:</b>
+  <div class="xml">
+    <pre><%= @xml %></pre>
+  </div>
+</p>
+
+<p>count of hash marks #: <%= @count %></p>
+<p>location of hash marks #:<br />
+
+<% @hash_arr.each do |h| %>
+<%= h %> <br />
+<% end %>
+
+</p>
+
+
+
+<%= link_to 'Edit', edit_call_path(@call) %> |
+<%= link_to 'Back', calls_path %>
+

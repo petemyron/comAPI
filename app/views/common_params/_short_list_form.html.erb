@@ -1,0 +1,28 @@
+<h1>Listing common_params</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+
+<% @common_params.each do |common_param| %>
+  <tr>
+    <td><%= common_param.name %></td>
+    <td><%= common_param.value %></td>
+    <td><%= link_to 'Show', common_param %></td>
+    <td><%= link_to 'Edit', edit_common_param_path(common_param) %></td>
+    <td><%= link_to 'Destroy', common_param, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Common param', new_common_param_path %>
+<%= link_to 'API Methods', calls_path %>
+

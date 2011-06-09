@@ -1,0 +1,70 @@
+<h2>Listing Common Parameters</h2>
+
+
+
+
+<h2>Listing calls</h2>
+
+<table>
+  <tr>
+    <th>Method name</th>
+    <th>Endpoint uri</th>
+    <th>XML</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @calls.each do |call| %>
+  <tr>
+    <td><%= call.method_name %></td>
+    <td><%= call.endpoint_uri %></td>
+    <td class="xml">Request:<br /><pre><%= call.xml %></pre></td>
+    <td><%= link_to 'Show', call %></td>
+    <td><%= link_to 'Edit', edit_call_path(call) %></td>
+    <td><%= link_to 'Destroy', call, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Execute', execute_request_path(call) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Call', new_call_path %>
+<%= link_to 'Common Parameters', common_params_path %>
+
+
+<br/>
+<br/>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @common_params.each do |common_param| %>
+<% @common_param = common_param -%>
+  <tr>
+    <td><%= common_param.name %></td>
+    <td>
+      <%= form_for(@common_param)  do |f| %>
+        <%= f.text_field :value %>
+        <%= hidden_field_tag "redirect_to", "calls_path" %>
+        <%= f.submit "Update" %>
+      <% end %>
+    </td>
+
+    <td><%= link_to 'Show', common_param %></td>
+    <td><%= link_to 'Edit', edit_common_param_path(common_param) %></td>
+    <td><%= link_to 'Destroy', common_param, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Common Parameters', common_params_path %>
+

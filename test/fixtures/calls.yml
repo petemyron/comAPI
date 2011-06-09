@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  method_name: MyString
+  endpoint_uri: MyString
+  xml: MyText
+
+two:
+  method_name: MyString
+  endpoint_uri: MyString
+  xml: MyText
