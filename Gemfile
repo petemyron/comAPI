@@ -6,6 +6,11 @@ gem 'rails', '3.0.7'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2', '< 0.3'
+gem 'typhoeus'
+gem 'json_pure'
+gem 'awesome_print', :require => 'ap'
+gem 'nokogiri'
+
 #gem 'rake', '0.8.7'
 
 # Use unicorn as the web server
@@ -30,3 +35,4 @@ gem 'mysql2', '< 0.3'
 # group :development, :test do
 #   gem 'webrat'
 # end
+

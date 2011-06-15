@@ -1,6 +1,3 @@
-<h2>Listing Common Parameters</h2>
-
-
 
 
 <h2>Listing calls</h2>
@@ -20,11 +17,11 @@
   <tr>
     <td><%= call.method_name %></td>
     <td><%= call.endpoint_uri %></td>
-    <td class="xml">Request:<br /><pre><%= call.xml %></pre></td>
+    <td class="xml">Request:<br /><%= call.xml %></td>
     <td><%= link_to 'Show', call %></td>
     <td><%= link_to 'Edit', edit_call_path(call) %></td>
     <td><%= link_to 'Destroy', call, :confirm => 'Are you sure?', :method => :delete %></td>
-    <td><%= link_to 'Execute', execute_request_path(call) %></td>
+    <td><%= link_to 'Execute', make_request_path(call) %></td>
   </tr>
 <% end %>
 </table>
@@ -35,8 +32,13 @@
 <%= link_to 'Common Parameters', common_params_path %>
 
 
-<br/>
-<br/>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<h2>Listing Common Parameters</h2>
 
 <table>
   <tr>
@@ -47,7 +49,7 @@
     <th></th>
   </tr>
 
-<% @common_params.each do |common_param| %>
+<% @common_params.sort_by(&:name).each do |common_param| %>
 <% @common_param = common_param -%>
   <tr>
     <td><%= common_param.name %></td>
@@ -66,5 +68,8 @@
 <% end %>
 </table>
 
+<br />
+
+<%= link_to 'New Parameter', new_common_param_path %>
 <%= link_to 'Common Parameters', common_params_path %>
 

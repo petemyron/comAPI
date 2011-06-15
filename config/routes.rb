@@ -1,6 +1,6 @@
 ComAPI::Application.routes.draw do
 
-  match 'calls/:id/execute_request' => 'calls#execute_request', :as => 'execute_request'
+  match 'calls/:id/make_request' => 'calls#make_request', :as => 'make_request'
 
   resources :common_params
 

@@ -1,4 +1,11 @@
 class CallsController < ApplicationController
+
+require 'rubygems'
+require 'typhoeus'
+#require 'json_pure'
+require 'awesome_print'
+require 'nokogiri'
+
   # GET /calls
   # GET /calls.xml
   def index
@@ -83,39 +90,96 @@ class CallsController < ApplicationController
   end
 
 
-  def execute_request
+  def make_request
     @call = Call.find(params[:id])
+    @common_params = CommonParam.all
 
     # Read in the XML
-    @xml = @call.xml
+    @orig_xml = @call.xml
+    @modified_xml = @orig_xml.dup # which will later be modified, .dup to avoid changing both strings
 
-    # Replace the coded fields with the matching fields from the common_params
+    @count = @orig_xml.count("#") # how many # are there -- should be even, too
 
-    @count = @xml.count("#") # how many # are there -- should be even, too
 
-    # add the pairs of locations of each # sign to the hash
-    @hash_arr = []
-    @offset = 0 # To start reading in the hash characters, start at the beginning
-    @i = 0
+    # Iterate through each common_param and replace each instance with the real value
+    @common_params.each do |cp|
+      # Add # to the name
+      @find = "#" + cp.name + "#"
 
-    # Load the # sign locations into an array
-    while @i < @count do
-      @location = @xml.index("#", offset = @offset)
-      @hash_arr[@i] = @location
-      @offset = @location + 1
-      @i += 1
+      # Replace that string with the actual value
+      @modified_xml.sub!(@find, cp.value) # the last time this runs gives us the final @modified_xml string
     end
 
-    # Delete between, and including, the hashes
+    # Let's time how long this takes
+    @start_time = Time.now
 
-    # Replace them with the actual values from the common_params table
+
+    # Load up some header variables
+    # This is, unfortunately, not a very fast way to do this and could use some refactoring
+    @subno = CommonParam.find_by_name("x-up-subno").value
+    @ua = CommonParam.find_by_name("user-agent").value
 
 
-    # Form string for sending the request, including headers
+    # Use Typhoeus to make the request
+    @request = Typhoeus::Request.new( @call.endpoint_uri,
+      :method => :post,
+      :auth_method => :ntlm,
+      :proxy => "http://ftpproxy.wdc.cingular.net:8080",
+      :headers => { :content_type => "text/xml", :charset => "UTF-8", :"x-up-subno" => @subno },
+      :body => @modified_xml,
+      :user_agent => @ua,
+      :verbose => false # for debug
+    )
+
+    # Schedule the task -- which runs immediately
+    @hydra = Typhoeus::Hydra.new
+    @hydra.queue(@request)
+    @hydra.run      # Execute the request
+
+    # Set the response object
+    @response = @request.response
+
+    @parsed_xml = Nokogiri::XML(@response.body)
+
+##    response.code    # http status code
+##    response.time    # time in seconds the request took
+##    response.headers # the http headers
+##    response.headers_hash # http headers put into a hash
+##    response.body    # the response body
+
+    # log some results
+    if @response.success?
+      logger.warn("-----------")
+      logger.warn("HTTP code: ", @response.code)
+      logger.warn("Time: ", @response.time)
+      logger.warn("Headers: ", @response.headers)
+      logger.warn("Body: ", @response.body)
+      logger.warn("-----------")
+    elsif @response.timed_out?
+      # the response timed out
+      logger.warn("-----------")
+      logger.warn("The API call timed out")
+      logger.warn("-----------")
+    elsif @response.code == 0
+      # Could not get an http response, something's wrong.
+      logger.warn("-----------")
+      logger.warn(@response.curl_error_message)
+      logger.warn("-----------")
+    else
+      # Received a non-successful http response.
+      logger.warn("-----------")
+      logger.warn("HTTP request failed: " + @response.code.to_s)
+      logger.warn("-----------")
+    end
+
+    # calculate the duration it took to make the call
+    @duration = Time.now - @start_time
 
 
 
   end
+
+
 
 end
 

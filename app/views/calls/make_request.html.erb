@@ -1,0 +1,40 @@
+<p>
+  <b>Method name:</b>
+  <%= @call.method_name %>
+</p>
+
+<p>
+  <b>Endpoint uri:</b>
+  <%= @call.endpoint_uri %>
+</p>
+
+<p>
+  <b>Headers: </b>
+    <div>User-Agent: <span class="xml_bigger"><%= @ua %></span></div>
+    <div>Subno: <span class="xml_bigger"><%= @subno %></span></div>
+</p>
+
+<p>
+  <b>XML sent as:</b>
+  <div class="xml_bigger"><%= @modified_xml %></div>
+</p>
+
+
+<p>
+  <b>Duration:</b>
+  <div><%= @duration %> seconds</div>
+</p>
+
+<p>
+  <b>Response:</b>
+  <div>HTTP code: <span class="xml_bigger"><%= @response.code %></span></div>
+  <div>Time: <span class="xml_bigger"><%= @response.time %></span></div>
+  <div>Headers: <div class="xml_bigger"><%= @response.headers %></div></div>
+  <div>Body: <div class="xml_bigger"><%= @parsed_xml %></div></div>
+</p>
+
+
+
+<%= link_to 'Edit', edit_call_path(@call) %> |
+<%= link_to 'Back', calls_path %>
+
