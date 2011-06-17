@@ -8,7 +8,18 @@
 </head>
 <body>
 
+  <nav class="upper_nav">
+    <%= link_to 'API Methods', calls_path %>
+    <%= link_to 'Common Parameters', common_params_path %>
+  </nav>
+
 <%= yield %>
+
+  <nav class="lower_nav">
+    <%= link_to 'API Methods', calls_path %>
+    <%= link_to 'Common Parameters', common_params_path %>
+  </nav>
 
 </body>
 </html>
+

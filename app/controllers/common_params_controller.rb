@@ -66,7 +66,8 @@ class CommonParamsController < ApplicationController
           format.html { redirect_to(calls_path, :notice => 'Common Param was successfully updated.') }
           format.xml  { head :ok }
         else
-          format.html { redirect_to(@common_param, :notice => 'Common Param was successfully updated.') }
+          format.html { redirect_to(@common_param, :notice => 'Common Param was successfully updated.') } # we never really go to the common_params list page
+#          format.html { redirect_to(@calls_path, :notice => 'Common Param was successfully updated.') }
           format.xml  { head :ok }
         end
       else
@@ -75,22 +76,6 @@ class CommonParamsController < ApplicationController
       end
     end
   end
-
-# original update
-#  def update
-#    @common_param = CommonParam.find(params[:id])
-
-#    respond_to do |format|
-#      if @common_param.update_attributes(params[:common_param])
-#        format.html { redirect_to(@common_param, :notice => 'Common param was successfully updated.') }
-#        format.xml  { head :ok }
-#      else
-#        format.html { render :action => "edit" }
-#        format.xml  { render :xml => @common_param.errors, :status => :unprocessable_entity }
-#      end
-#    end
-#  end
-
 
   # DELETE /common_params/1
   # DELETE /common_params/1.xml

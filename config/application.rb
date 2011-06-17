@@ -40,3 +40,4 @@ module ComAPI
     config.filter_parameters += [:password]
   end
 end
+

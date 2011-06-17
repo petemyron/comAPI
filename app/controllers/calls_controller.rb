@@ -117,7 +117,7 @@ require 'nokogiri'
     # Load up some header variables
     # This is, unfortunately, not a very fast way to do this and could use some refactoring
     @subno = CommonParam.find_by_name("x-up-subno").value
-    @ua = CommonParam.find_by_name("user-agent").value
+    @ua = CommonParam.find_by_name("user_agent").value
 
 
     # Use Typhoeus to make the request
@@ -128,7 +128,7 @@ require 'nokogiri'
       :headers => { :content_type => "text/xml", :charset => "UTF-8", :"x-up-subno" => @subno },
       :body => @modified_xml,
       :user_agent => @ua,
-      :verbose => false # for debug
+      :verbose => true # for debug
     )
 
     # Schedule the task -- which runs immediately
@@ -150,25 +150,28 @@ require 'nokogiri'
     # log some results
     if @response.success?
       logger.warn("-----------")
-      logger.warn("HTTP code: ", @response.code)
-      logger.warn("Time: ", @response.time)
-      logger.warn("Headers: ", @response.headers)
-      logger.warn("Body: ", @response.body)
+      logger.warn("HTTP code: #{@response.code.to_s}")
+      logger.warn("Time: #{@response.time.to_s}")
+      logger.warn("Headers: #{@response.headers}")
+      logger.warn("Body: #{@response.body}")
       logger.warn("-----------")
     elsif @response.timed_out?
       # the response timed out
       logger.warn("-----------")
-      logger.warn("The API call timed out")
+      logger.warn("The API call '#{@call.method_name}' timed out")
       logger.warn("-----------")
     elsif @response.code == 0
       # Could not get an http response, something's wrong.
       logger.warn("-----------")
-      logger.warn(@response.curl_error_message)
+      logger.warn("curl_error_message: #{@response.curl_error_message}")
       logger.warn("-----------")
     else
       # Received a non-successful http response.
       logger.warn("-----------")
-      logger.warn("HTTP request failed: " + @response.code.to_s)
+      logger.warn("HTTP code: #{@response.code.to_s}")
+      logger.warn("Time: #{@response.time.to_s}")
+      logger.warn("Headers: #{@response.headers}")
+      logger.warn("Body: #{@response.body}")
       logger.warn("-----------")
     end
 
