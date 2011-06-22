@@ -1,6 +1,7 @@
 
 
-<h2>Listing calls</h2>
+
+<h2>API Methods</h2>
 
 <table>
   <tr>
@@ -9,43 +10,42 @@
     <th>XML</th>
     <th></th>
     <th></th>
+    <% # if the URL doesn't contain "admin=true" then let's not show the 'destroy' button %>
+    <% if params[:admin].to_s == "true" %>
     <th></th>
+    <% end %>
     <th></th>
   </tr>
 
-<% @calls.each do |call| %>
+<% @calls.sort_by(&:method_name).each do |call| %>
   <tr>
     <td><%= call.method_name %></td>
     <td><%= call.endpoint_uri %></td>
-    <td class="xml">Request:<br /><%= call.xml %></td>
-    <td><%= link_to 'Show', call %></td>
-    <td><%= link_to 'Edit', edit_call_path(call) %></td>
-    <td><%= link_to 'Destroy', call, :confirm => 'Are you sure?', :method => :delete %></td>
-    <td><%= link_to 'Execute', make_request_path(call) %></td>
+    <td><div class="xml"><%= call.xml %></div></td>
+    <td><%= button_to 'Show', call, :method => :get %></td>
+    <td><%= button_to 'Edit', edit_call_path(call), :method => :get %></td>
+    <% # if the URL doesn't contain "admin=true" then let's not show the 'destroy' button %>
+    <% if params[:admin].to_s == "true" %>
+    <td><%= button_to 'Destroy', call, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
+    <td><%= button_to 'Execute', make_request_path(call), :method => :get %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Call', new_call_path %>
+<%= button_to 'New Call', new_call_path, :method => :get %>
 
 
 <br />
-<br />
-<br />
-<br />
-<br />
 
-<h2>Listing Common Parameters</h2>
+<h2>Common Parameters</h2>
 
 <table>
   <tr>
     <th>Name</th>
     <th>Value</th>
-    <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @common_params.sort_by(&:name).each do |common_param| %>
@@ -59,15 +59,11 @@
         <%= f.submit "Update" %>
       <% end %>
     </td>
-
-    <td><%= link_to 'Show', common_param %></td>
-    <td><%= link_to 'Edit', edit_common_param_path(common_param) %></td>
-    <td><%= link_to 'Destroy', common_param, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Parameter', new_common_param_path %>
+<%= button_to 'New Parameter', new_common_param_path, :method => :get %>
 

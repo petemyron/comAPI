@@ -1,9 +1,4 @@
-body {
-  background-color: #fff;
-  color: #333;
-  margin: 0px;
-  padding: 0px;
-}
+body { background-color: #fff; color: #333; }
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
@@ -11,56 +6,16 @@ body, p, ol, ul, td {
   line-height: 1em;
 }
 
-/* Navigation styling */
-
-/*#upper_nav { position: fixed; }*/
-#upper_nav ul, #lower_nav ul { margin: 0px; padding: 0px; }
-#upper_nav li, #lower_nav li { display: inline; }
-
-#upper_nav, #lower_nav {
-  padding: 1em;
-  margin: 0em;
-  background-color: #D1E3EF;
-}
-
-#upper_nav a, #lower_nav a {
-  color: #666;
-  padding: 1em 2em;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-#upper_nav a:hover, #lower_nav a:hover {
-  color: #000;
-}
-
-.divider {
-  color: #bbb;
-}
-
-
-/* Container styling */
-
-#container {
-  padding: 20px;
-  margin: auto;
-  width: 95%;
-  min-height: 400px;
-}
-
-#container a { color: #000; text-decoration: none;}
-#container a:visited { color: #666; }
-#container a:hover { color: #fff; background-color:#000; }
-
-
-/* All other rails generated styles */
+a { color: #000; }
+a:visited { color: #666; }
+a:hover { color: #fff; background-color:#000; }
 
 div.field, div.actions {
   margin-bottom: 10px;
 }
 
 table, th, tr, td {
-  border: 1px solid #ccc;
+  border: 1px solid gray;
   border-collapse: collapse;
 }
 
@@ -68,7 +23,7 @@ th, tr, td {
   padding: 2px;
 }
 
-tr:nth-child(odd)    { background-color: #E9EFFF; }
+tr:nth-child(odd)    { background-color:#eee; }
 /*tr:nth-child(even)    { background-color:#fff; }*/
 tr:hover { background-color: #D1E3EF; }
 

@@ -1,5 +1,7 @@
 ComAPI::Application.routes.draw do
 
+  get "help" => "pages#help"
+
   match 'calls/:id/make_request' => 'calls#make_request', :as => 'make_request'
 
   resources :common_params

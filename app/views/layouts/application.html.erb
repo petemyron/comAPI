@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ComAPI</title>
+  <title>Commerce API</title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
-  <nav class="upper_nav">
-    <%= link_to 'API Methods', calls_path %>
-    <%= link_to 'Common Parameters', common_params_path %>
-  </nav>
+  <ul id="upper_nav">
+    <li><%= link_to 'Home', calls_path %><span class="divider">|</span></li>
+    <li><%= link_to 'Common Parameters', common_params_path %><span class="divider">|</span></li>
+    <li><%= link_to 'Help', help_path %></li>
+  </ul>
 
+  <div id="container">
 <%= yield %>
+  </div>
 
-  <nav class="lower_nav">
-    <%= link_to 'API Methods', calls_path %>
-    <%= link_to 'Common Parameters', common_params_path %>
-  </nav>
+  <ul id="lower_nav">
+    <li><%= link_to 'API Methods', calls_path %><span class="divider">|</span></li>
+    <li><%= link_to 'Common Parameters', common_params_path %><span class="divider">|</span></li>
+    <li><%= link_to 'Help', help_path %></li>
+  </ul>
 
 </body>
 </html>

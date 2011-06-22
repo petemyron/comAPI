@@ -1,0 +1,23 @@
+<h1>Help!</h1>
+
+<p>This tool has a couple tricks to it that you'll need to know about.</p>
+
+
+<p>First, when creating or editing a new API call, there is a special phrase that must be used in order for the system to dynamically pick up any corresponding fields you want. This phrase is a no-spaces-allowed field encapsulated in "<span class="xml_bigger">#</span>" marks. When the # phrase matches a row in the Common Parameters table, this application automatically fills in the # phrase with the value of that row.</p>
+
+<p>Let's look at an example.</p>
+
+<p>Here's the "<span class="xml_bigger">getCatalogs</span>" call. Notice the # phrase "<span class="xml_bigger">#user_agent#</span>".</p>
+
+
+<p>Now, look at the Common Parameters table at the bottom and see the row named exactly "user_agent" with the value "BlackBerry9800/".</p>
+
+
+<p>If you click on the the "Execute" button next to getCatalogs, the resulting page will show that the "XML sent as" field shows that the proper value was put in place of the # phrase.</p>
+
+
+
+<h2>Administrate</h2>
+
+<p>The "delete" command was hidden in order to prevent common-folk from deleting a perfectly good API call permanently. You can override this by adding "<span class="xml_bigger">?admin=true</span>" to the end of the homepage's URL.</p>
+
