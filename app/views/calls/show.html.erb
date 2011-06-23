@@ -2,17 +2,18 @@
 
 <h1><%= @call.method_name %></h1>
 
-<p>
-  <b>Endpoint URI:</b>
-  <%= @call.endpoint_uri %>
-</p>
+<fieldset>
+  <legend>Endpoint URI</legend>
+  <div class="xml_bigger"><%= @call.endpoint_uri %></div>
+</fieldset>
 
-<p>
-  <b>XML:</b>
-  <div class="xml"><%= @call.xml %></div>
-</p>
+<fieldset>
+  <legend>XML</legend>
+  <div class="xml_bigger"><%= @call.xml %></div>
+</fieldset>
 
 
 <%= link_to 'Edit', edit_call_path(@call) %> |
-<%= link_to 'Back', calls_path %>
+<%= link_to 'Back', calls_path %> |
+<%= link_to 'Execute', make_request_path(@call), :method => :get %>
 

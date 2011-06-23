@@ -2,7 +2,7 @@ class CommonParamsController < ApplicationController
   # GET /common_params
   # GET /common_params.xml
   def index
-    @common_params = CommonParam.all
+    @common_params = CommonParam.search(params[:cp_search])
 
     respond_to do |format|
       format.html # index.html.erb

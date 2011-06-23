@@ -52,15 +52,34 @@ body, p, ol, ul, td {
 #container a:visited { color: #666; }
 #container a:hover { color: #fff; background-color:#000; }
 
-.method_details {
-  display: none;
+.hidden { display: none; }
+
+.generic_wrap {
   border: 1px solid #ccc;
   padding: 1em;
   margin: .5em 0em;
-  background-color: #eee;
-  border-radius: 1em;
-  -moz-border-radius: 1em;
+  background-color: #f9f9f9;
+  border-radius: .5em;
+  -moz-border-radius: .5em;
 }
+
+fieldset {
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: .5em 0em;
+  background-color: #f9f9f9;
+  border-radius: .5em;
+  -moz-border-radius: .5em;
+}
+fieldset > legend {
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: .3em;
+  -moz-border-radius: .3em;
+  padding: 0em 1em;
+}
+
+.indent { margin-left: 2em;}
 
 .list h4 {
   display: inline;
@@ -144,7 +163,6 @@ tr:hover { background-color: #D1E3EF; }
   font-size: .9em;
   line-height: 1.2em;
   white-space: pre-wrap;
-  margin-left: 20px;
 }
 
 p > div {

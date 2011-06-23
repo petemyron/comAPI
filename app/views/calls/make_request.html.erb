@@ -1,37 +1,42 @@
 <h2><%= @call.method_name %></h2>
 
-<p>
-  <b>Endpoint uri:</b>
-  <%= @call.endpoint_uri %>
-</p>
+<h3>Input</h3>
+<div class="indent">
+  <fieldset>
+    <legend>Endpoint URI:</legend>
+    <%= @call.endpoint_uri %>
+  </fieldset>
 
-<p>
-  <b>Headers: </b>
+  <fieldset>
+    <legend>Sent Headers:</legend>
     <div>User-Agent: <span class="xml_bigger"><%= @ua %></span></div>
     <div>Subno: <span class="xml_bigger"><%= @subno %></span></div>
-</p>
+  </fieldset>
 
-<p>
-  <b>XML sent as:</b>
-  <div class="xml_bigger"><%= @modified_xml %></div>
-</p>
+  <fieldset>
+    <legend>XML sent as:</legend>
+    <div class="xml_bigger"><%= @modified_xml %></div>
+  </fieldset>
+
+  <br />
+  <%= link_to 'Edit', edit_call_path(@call) %> |
+  <%= link_to 'Back', calls_path %>
+  <br />
+</div>
+
+<h3>Output</h3>
+<div class="indent">
+  <fieldset>
+    <legend>Received Headers:</legend>
+    <div class="xml_bigger"><%= @response.headers %></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Body:</legend>
+    <div class="xml_bigger"><%= @parsed_xml %></div>
+  </fieldset>
+</div>
 
 
-<p>
-  <b>Duration:</b>
-  <div><%= @duration %> seconds</div>
-</p>
-
-<p>
-  <b>Response:</b>
-  <div>HTTP code: <span class="xml_bigger"><%= @response.code %></span></div>
-  <div>Time: <span class="xml_bigger"><%= @response.time %></span></div>
-  <div>Headers: <div class="xml_bigger"><%= @response.headers %></div></div>
-  <div>Body: <div class="xml_bigger"><%= @parsed_xml %></div></div>
-</p>
-
-
-
-<%= link_to 'Edit', edit_call_path(@call) %> |
 <%= link_to 'Back', calls_path %>
 
