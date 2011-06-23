@@ -52,6 +52,26 @@ body, p, ol, ul, td {
 #container a:visited { color: #666; }
 #container a:hover { color: #fff; background-color:#000; }
 
+.method_details {
+  display: none;
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: .5em 0em;
+  background-color: #eee;
+  border-radius: 1em;
+  -moz-border-radius: 1em;
+}
+
+.list h4 {
+  display: inline;
+  margin-bottom: 2em;
+}
+
+.list div { padding: .5em; }
+.list div > a { font-size: .7em; }
+.list > div:nth-child(odd)    { background-color: #E9EFFF; }
+.list > div:hover { background-color: #D1E3EF; }
+.list form { display: inline; }
 
 /* All other rails generated styles */
 
@@ -67,6 +87,9 @@ table, th, tr, td {
 th, tr, td {
   padding: 2px;
 }
+
+
+/* Some table coloring */
 
 tr:nth-child(odd)    { background-color: #E9EFFF; }
 /*tr:nth-child(even)    { background-color:#fff; }*/
@@ -109,7 +132,7 @@ tr:hover { background-color: #D1E3EF; }
 
 .xml {
   font-family: monospace;
-  color: #999;
+  color: #444;
   font-size: .8em;
   line-height: 1em;
   white-space: pre-wrap;
@@ -117,7 +140,7 @@ tr:hover { background-color: #D1E3EF; }
 
 .xml_bigger {
   font-family: monospace;
-  color: #666;
+  color: #444;
   font-size: .9em;
   line-height: 1.2em;
   white-space: pre-wrap;
