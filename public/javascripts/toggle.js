@@ -1,4 +1,4 @@
-function toggle(id) {
+function my_toggle(id) {
  var element = document.getElementById(id);
  if(element.style.display == "block") {
       element.style.display = "none";

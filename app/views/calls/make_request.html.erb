@@ -2,21 +2,19 @@
 
 <h3>Input</h3>
 <div class="indent">
-  <fieldset>
-    <legend>Endpoint URI:</legend>
+
+  <% field_set_tag 'Endpoint URI:' do -%>
     <%= @call.endpoint_uri %>
-  </fieldset>
+  <% end -%>
 
-  <fieldset>
-    <legend>Sent Headers:</legend>
-    <div>User-Agent: <span class="xml_bigger"><%= @ua %></span></div>
-    <div>Subno: <span class="xml_bigger"><%= @subno %></span></div>
-  </fieldset>
+  <% field_set_tag 'Sent Headers:' do -%>
+    <div>User-Agent: <span class="xml"><%= @ua %></span></div>
+    <div>Subno: <span class="xml"><%= @subno %></span></div>
+  <% end -%>
 
-  <fieldset>
-    <legend>XML sent as:</legend>
-    <div class="xml_bigger"><%= @modified_xml %></div>
-  </fieldset>
+  <% field_set_tag 'XML Sent As:' do -%>
+    <div class="xml"><%= @modified_xml %></div>
+  <% end -%>
 
   <br />
   <%= link_to 'Edit', edit_call_path(@call) %> |
@@ -26,15 +24,13 @@
 
 <h3>Output</h3>
 <div class="indent">
-  <fieldset>
-    <legend>Received Headers:</legend>
-    <div class="xml_bigger"><%= @response.headers %></div>
-  </fieldset>
+  <% field_set_tag 'Received Headers:' do -%>
+    <div class="xml"><%= @response.headers %></div>
+  <% end -%>
 
-  <fieldset>
-    <legend>Body:</legend>
-    <div class="xml_bigger"><%= @parsed_xml %></div>
-  </fieldset>
+  <% field_set_tag 'Body:' do -%>
+    <div class="xml"><%= @parsed_xml %></div>
+  <% end -%>
 </div>
 
 

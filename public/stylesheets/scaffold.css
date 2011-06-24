@@ -152,15 +152,7 @@ tr:hover { background-color: #D1E3EF; }
 .xml {
   font-family: monospace;
   color: #444;
-  font-size: .8em;
-  line-height: 1em;
-  white-space: pre-wrap;
-}
-
-.xml_bigger {
-  font-family: monospace;
-  color: #444;
-  font-size: .9em;
+  font-size: 1em;
   line-height: 1.2em;
   white-space: pre-wrap;
 }

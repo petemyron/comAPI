@@ -6,7 +6,7 @@
 
 <%= form_tag calls_path, :method => 'get', :id => "method_search_form" do %>
   <p>
-    <%= hidden_field_tag :cp_search, params[:cp_search] %>
+    <%= hidden_field_tag :cp_search, params[:cp_search], :id => "hidden_cp_search" %>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "Search", :name => nil %>
   </p>
@@ -17,7 +17,7 @@
 <% @calls.sort_by(&:method_name).each do |call| %>
 
   <div id ="method_<%= @i %>">
-    <h4><%= link_to_function "#{call.method_name}", "toggle('method_detail_#{@i}')" %></h4> |
+    <h4><%= link_to_function "#{call.method_name}", "my_toggle('method_detail_#{@i}')" %></h4> |
     <%= link_to 'Show', call, :method => :get %> |
     <%= link_to 'Edit', edit_call_path(call), :method => :get %> |
 
@@ -29,10 +29,9 @@
     <%= link_to 'Execute', make_request_path(call), :method => :get %>
 
     <div class="hidden" id ="method_detail_<%= @i %>">
-      <fieldset>
-        <legend><%= call.endpoint_uri %></legend>
+      <% field_set_tag "#{call.endpoint_uri}" do -%>
         <div class="xml"><%= call.xml %></div>
-      </fieldset>
+      <% end -%>
     </div>
 
   </div>
@@ -43,18 +42,16 @@
 
 <br />
 <%= button_to 'New Call', new_call_path, :method => :get %>
+
 <br />
 <br />
-
-
-
 <br />
 
 <h2>Common Parameters</h2>
 
 <%= form_tag calls_path, :method => 'get', :id => "cp_search_form" do %>
   <p>
-    <%= hidden_field_tag :search, params[:search] %>
+    <%= hidden_field_tag :search, params[:search], :id => "hidden_search" %>
     <%= text_field_tag :cp_search, params[:cp_search] %>
     <%= submit_tag "Search", :name => nil %>
   </p>
@@ -68,10 +65,11 @@
     <h4><%= common_param.name %></h4>
     <%= form_for(@common_param)  do |f| %>
       <%= f.text_field :value %>
-      <%= hidden_field_tag "redirect_to", "calls_path" %>
-      <%= f.submit "Update" %>
+      <%= hidden_field_tag "redirect_to", "calls_path", :id => "redirect_to_#{@i}" %>
+      <%= f.submit "Update", :id => "submit_#{@common_param.name}" %>
     <% end %>
   </div>
+  <% @i += 1 %>
 <% end %>
 </div>
 
