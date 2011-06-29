@@ -38,6 +38,13 @@ body, p, ol, ul, td {
   color: #bbb;
 }
 
+#user_nav {
+  float: right;
+  font-size: .8em;
+}
+#user_nav a {
+  padding: 0em;
+}
 
 /* Container styling */
 

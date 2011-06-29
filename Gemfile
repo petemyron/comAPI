@@ -10,6 +10,7 @@ gem 'typhoeus'
 gem 'json_pure'
 gem 'awesome_print', :require => 'ap'
 gem 'nokogiri'
+gem 'devise'
 
 
 #gem 'rake', '0.8.7'
