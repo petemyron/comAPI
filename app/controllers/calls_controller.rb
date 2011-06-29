@@ -11,7 +11,7 @@ require 'nokogiri'
   def index
     @calls = Call.search(params[:search])
 #    @calls = Call.all
-    @common_params = CommonParam.search(params[:cp_search])
+#    @common_params = CommonParam.search(params[:cp_search])
 
     respond_to do |format|
       format.html # index.html.erb

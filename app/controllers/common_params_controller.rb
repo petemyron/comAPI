@@ -62,8 +62,8 @@ class CommonParamsController < ApplicationController
       if @common_param.update_attributes(params[:common_param])
 
         # determine where the user should be redirected to, depending on where the field was updated
-        if params[:redirect_to] == "calls_path"
-          format.html { redirect_to(calls_path, :notice => 'Common Param was successfully updated.') }
+        if params[:redirect_to] == "home_path"
+          format.html { redirect_to(home_path, :notice => 'Common Param was successfully updated.') }
           format.xml  { head :ok }
         else
           format.html { redirect_to(@common_param, :notice => 'Common Param was successfully updated.') } # we never really go to the common_params list page

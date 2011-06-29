@@ -3,6 +3,7 @@ ComAPI::Application.routes.draw do
   devise_for :users
 
   get "help" => "pages#help"
+  get "home" => "pages#index"
 
   match 'calls/:id/make_request' => 'calls#make_request', :as => 'make_request'
 
@@ -60,7 +61,7 @@ ComAPI::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => "calls#index"
+  root :to => "pages#index"
 
   # See how all your routes lay out with "rake routes"
 
