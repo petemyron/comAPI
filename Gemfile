@@ -11,6 +11,7 @@ gem 'json_pure'
 gem 'awesome_print', :require => 'ap'
 gem 'nokogiri'
 gem 'devise'
+gem 'jquery-rails'
 
 
 #gem 'rake', '0.8.7'

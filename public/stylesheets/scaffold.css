@@ -97,7 +97,10 @@ fieldset > legend {
 .list div > a { font-size: .7em; }
 .list > div:nth-child(odd)    { background-color: #E9EFFF; }
 .list > div:hover { background-color: #D1E3EF; }
-.list form { display: inline; }
+.list form, .list form div { display: inline; }
+
+
+
 
 /* All other rails generated styles */
 
@@ -133,7 +136,7 @@ tr:hover { background-color: #D1E3EF; }
 
 #error_explanation {
   width: 450px;
-  border: 2px solid red;
+  border: 1px solid red;
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;
