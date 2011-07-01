@@ -1,7 +1,6 @@
 class Call < ActiveRecord::Base
   validates :method_name, :presence => true, :uniqueness => true
   validates :endpoint_uri, :presence => true
-  validates :xml, :presence => true
   belongs_to :group
   attr_accessor :new_group_name
   before_save :create_group_from_name
