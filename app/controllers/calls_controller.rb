@@ -10,8 +10,15 @@ require 'nokogiri'
   # GET /calls.xml
   def index
     @calls = Call.search(params[:search])
-#    @calls = Call.all
-#    @common_params = CommonParam.search(params[:cp_search])
+    @groups = Group.select("DISTINCT name, id") # used to show the tabs/available groups
+    
+    # give the view the correct list, depending on whether or not there's a URL param already included
+    if params[:tab]
+      @group_id = @groups.find_by_name("#{params[:tab]}").id
+      @list = Call.find_all_by_group_id(@group_id)
+    else
+      @list = @calls.sort_by(&:method_name) # works!
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -141,12 +148,6 @@ require 'nokogiri'
     @response = @request.response
 
     @parsed_xml = Nokogiri::XML(@response.body)
-
-##    response.code    # http status code
-##    response.time    # time in seconds the request took
-##    response.headers # the http headers
-##    response.headers_hash # http headers put into a hash
-##    response.body    # the response body
 
     # log some results
     if @response.success?

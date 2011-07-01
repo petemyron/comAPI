@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110628234153) do
+ActiveRecord::Schema.define(:version => 20110630180123) do
 
   create_table "calls", :force => true do |t|
     t.string   "method_name"
@@ -18,11 +18,19 @@ ActiveRecord::Schema.define(:version => 20110628234153) do
     t.text     "xml"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "group_id"
   end
 
   create_table "common_params", :force => true do |t|
     t.string   "name"
     t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20110628234153) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recent_group_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

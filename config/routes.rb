@@ -1,15 +1,17 @@
 ComAPI::Application.routes.draw do
 
+
   devise_for :users
 
   get "help" => "pages#help"
-  get "home" => "pages#index"
+  get "home" => "pages#index" # the home page
 
   match 'calls/:id/make_request' => 'calls#make_request', :as => 'make_request'
 
-  resources :common_params
 
+  resources :common_params
   resources :calls
+  resources :groups
 
 
   # The priority is based upon order of creation:

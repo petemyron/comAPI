@@ -46,7 +46,26 @@ body, p, ol, ul, td {
   padding: 0em;
 }
 
-/* Container styling */
+/* Group tabs */
+#group_tabs {
+  margin: 0px;
+  padding: .5em;
+}
+#group_tabs li {
+  background-color: #E9EFFF;
+  border: 1px solid black;
+  border-bottom: none;
+  list-style-type: none;
+  display: inline;
+  padding: .5em 1em;
+}
+#group_tabs li.inactive_tab {
+  background-color: #f9f9f9;
+  color: gray;
+  border-bottom: 1px solid black;
+}
+
+/* Container  */
 
 #container {
   padding: 20px;
@@ -93,6 +112,7 @@ fieldset > legend {
   margin-bottom: 2em;
 }
 
+.list { border-top: 1px solid black; }
 .list div { padding: .5em; }
 .list div > a { font-size: .7em; }
 .list > div:nth-child(odd)    { background-color: #E9EFFF; }

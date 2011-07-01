@@ -9,30 +9,47 @@
   </p>
 <% end %>
 
-<div class="list" id ="method_list">
-<% @i = 0 %>
-<% @calls.sort_by(&:method_name).each do |call| %>
+<ul id="group_tabs">
+  <% @groups.each do |g| %>
+    <% if params[:tab] == g.name %>
+      <li class="active_tab"><%= link_to "#{g.name}", :tab => "#{g.name}" %></li>
+    <% else %>
+      <li class="inactive_tab"><%= link_to "#{g.name}", :tab => "#{g.name}" %></li>
+    <% end %>
+  <% end %>
+</ul>    
 
-  <div id ="method_<%= @i %>">
-    <h4><%= link_to_function "#{call.method_name}", "my_toggle('method_detail_#{@i}')" %></h4> |
+
+<div class="list" id ="method_list">
+
+<% @list.each do |call| %>
+  <div id ="method_<%= call.id %>">
+    <h4><%= link_to_function "#{call.method_name}", "my_toggle('method_detail_#{call.id}')" %></h4> |
     <%= link_to 'Show', call, :method => :get %> |
     <%= link_to 'Edit', edit_call_path(call), :method => :get %> |
 
-    <% # if the URL doesn't contain "admin=true" then let's not show the 'destroy' button %>
+    <% # if the URL doesn't contain "admin=true" then let's not show the 'delete' button :) %>
     <% if params[:admin].to_s == "true" %>
       <%= link_to 'Delete', call, :confirm => 'Are you sure?', :method => :delete %> |
     <% end %>
 
     <%= link_to 'Execute', make_request_path(call), :method => :get %>
 
-    <div class="hidden" id ="method_detail_<%= @i %>">
-      <%= field_set_tag "#{call.endpoint_uri}" do -%>
+    <div class="hidden" id ="method_detail_<%= call.id %>">
+      <%= field_set_tag "#{call.endpoint_uri}" do %>
         <div class="xml"><%= call.xml %></div>
-      <% end -%>
+      <% end %>
+      
+      <%= field_set_tag 'Delete me Group' do %>
+        <div><% if call.group.name.nil? %>
+          [none]
+        <% else %>
+          <%= call.group.name %>
+        <% end %>
+        </div>
+      <% end %>
     </div>
-
   </div>
-  <% @i += 1 %>
 
 <% end %>
 </div>

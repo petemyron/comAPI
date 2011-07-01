@@ -28,5 +28,5 @@
 
 <h2>Administrate</h2>
 
-<p>The "delete" command was hidden in order to prevent common-folk from deleting a perfectly good API call permanently. You can override this by adding "<span class="xml">?admin=true</span>" to the end of the homepage's URL.</p>
+<p>The "delete" command was hidden in order to prevent common-folk from deleting a perfectly good API call permanently. You can override this by adding "<%= link_to '?admin=true', root_url( :admin => "true" ) %>" to the end of the homepage's URL.</p>
 

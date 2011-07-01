@@ -1,16 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @call.method_name %></h1>
+<h1><%= @call.method_name %> - <%= @call.group.name %></h1>
 
-<fieldset>
-  <legend>Endpoint URI</legend>
-  <div class="xml"><%= @call.endpoint_uri %></div>
-</fieldset>
+<%= field_set_tag 'Endpoint URI' do -%>
+  <div class="xml"><%= @call.endpoint_uri %></div>  
+<% end -%>
 
-<fieldset>
-  <legend>XML</legend>
+<%= field_set_tag 'XML' do -%>
   <div class="xml"><%= @call.xml %></div>
-</fieldset>
+<% end -%>
 
 
 <%= link_to 'Edit', edit_call_path(@call) %> |
