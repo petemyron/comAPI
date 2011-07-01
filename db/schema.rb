@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110630180123) do
+ActiveRecord::Schema.define(:version => 20110701181614) do
 
   create_table "calls", :force => true do |t|
     t.string   "method_name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20110630180123) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.string   "method_type",  :default => "post"
   end
 
   create_table "common_params", :force => true do |t|

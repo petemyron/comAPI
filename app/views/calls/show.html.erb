@@ -2,14 +2,9 @@
 
 <h1><%= @call.method_name %> - <%= @call.group.name %></h1>
 
-<%= field_set_tag 'Endpoint URI' do -%>
-  <div class="xml"><%= @call.endpoint_uri %></div>  
-<% end -%>
-
-<%= field_set_tag 'XML' do -%>
+<%= field_set_tag "#{@call.method_type.upcase} - #{@call.endpoint_uri}" do %>
   <div class="xml"><%= @call.xml %></div>
-<% end -%>
-
+<% end %>
 
 <%= link_to 'Edit', edit_call_path(@call) %> |
 <%= link_to 'Back', calls_path %> |

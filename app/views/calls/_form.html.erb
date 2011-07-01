@@ -20,6 +20,10 @@
     <%= f.text_field :endpoint_uri %>
   </div>
   <div class="field">
+    <%= f.label :method_type %><br/>
+    <%= f.select :method_type, options_for_select( [ "get", "post" ], @call.method_type) %>
+  </div>
+  <div class="field">
     <%= f.label :group_id %><br />
     <%= f.collection_select :group_id, Group.all, :id, :name, :prompt => "Please select a group" %>
     or create one: 

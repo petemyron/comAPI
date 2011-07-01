@@ -36,16 +36,13 @@
     <%= link_to 'Execute', make_request_path(call), :method => :get %>
 
     <div class="hidden" id ="method_detail_<%= call.id %>">
-      <%= field_set_tag "#{call.endpoint_uri}" do %>
-        <div class="xml"><%= call.xml %></div>
-      <% end %>
-      
-      <%= field_set_tag 'Delete me Group' do %>
-        <div><% if call.group.name.nil? %>
-          [none]
-        <% else %>
-          <%= call.group.name %>
-        <% end %>
+      <%= field_set_tag "#{call.method_type.upcase} - #{call.endpoint_uri}" do %>
+        <div class="xml">
+          <% if call.xml.blank? %>
+            [none]
+          <% else %>
+<%= call.xml %>
+          <% end %>
         </div>
       <% end %>
     </div>

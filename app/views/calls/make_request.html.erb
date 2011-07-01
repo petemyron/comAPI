@@ -3,16 +3,10 @@
 <h3>Input</h3>
 <div class="indent">
 
-  <% field_set_tag 'Endpoint URI:' do -%>
-    <%= @call.endpoint_uri %>
-  <% end -%>
-
-  <% field_set_tag 'Sent Headers:' do -%>
+  <% field_set_tag "#{@call.method_type.upcase} - #{@call.endpoint_uri}:" do -%>
     <div>User-Agent: <span class="xml"><%= @ua %></span></div>
     <div>Subno: <span class="xml"><%= @subno %></span></div>
-  <% end -%>
-
-  <% field_set_tag 'XML Sent As:' do -%>
+    <br/>
     <div class="xml"><%= @modified_xml %></div>
   <% end -%>
 
@@ -25,7 +19,8 @@
 <h3>Output</h3>
 <div class="indent">
   <% field_set_tag 'Received Headers:' do -%>
-    <div><p>Duration: <%= @response.time %></p></div>
+    <div>Duration: <span class="xml"><%= @response.time %></span></div>
+    <br/>
     <div class="xml"><%= @response.headers %></div>
   <% end -%>
 

@@ -12,7 +12,9 @@ require 'nokogiri'
     @calls = Call.search(params[:search])
     @groups = Group.select("DISTINCT name, id") # used to show the tabs/available groups
     
-    # give the view the correct list, depending on whether or not there's a URL param already included
+    # give the view the correct list, depending on whether or not there's a URL param already 
+    # included or the user has recently visited a specific group
+#    if params[:tab]
     if params[:tab]
       @group_id = @groups.find_by_name("#{params[:tab]}").id
       @list = Call.find_all_by_group_id(@group_id)
@@ -130,7 +132,7 @@ require 'nokogiri'
 
     # Use Typhoeus to make the request
     @request = Typhoeus::Request.new( @call.endpoint_uri,
-      :method => :post,
+      :method => @call.method_type,
       :auth_method => :ntlm,
       :proxy => "http://ftpproxy.wdc.cingular.net:8080",
       :headers => { :content_type => "text/xml", :charset => "UTF-8", :"x-up-subno" => @subno },
