@@ -6,16 +6,20 @@
     <th>Value</th>
     <th></th>
     <th></th>
-    <th></th>
+    <% if admin? %>
+      <th></th>
+    <% end %>
   </tr>
 
 <% @common_params.sort_by(&:name).each do |common_param| %>
   <tr>
     <td><%= common_param.name %></td>
     <td><%= common_param.value %></td>
-    <td><%= button_to 'Show', common_param, :method => :get %></td>
-    <td><%= button_to 'Edit', edit_common_param_path(common_param), :method => :get %></td>
-    <td><%= button_to 'Delete', common_param, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Details', common_param, :method => :get %></td>
+    <td><%= link_to 'Edit', edit_common_param_path(common_param), :method => :get %></td>
+    <% if admin? %>
+      <td><%= button_to 'Delete', common_param, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

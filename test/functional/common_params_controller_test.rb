@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class CommonParamsControllerTest < ActionController::TestCase
+    
+  # Devise helpers
+  include Devise::TestHelpers
+
   setup do
     @common_param = common_params(:one)
   end

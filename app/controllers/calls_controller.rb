@@ -17,7 +17,7 @@ require 'nokogiri'
 #    if params[:tab]
     if params[:tab]
       @group_id = @groups.find_by_name("#{params[:tab]}").id
-      @list = Call.find_all_by_group_id(@group_id)
+      @list = Call.find_all_by_group_id(@group_id).sort_by(&:method_name)
     else
       @list = @calls.sort_by(&:method_name) # works!
     end

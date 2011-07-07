@@ -10,9 +10,14 @@
 <% end %>
 
 <ul id="group_tabs">
+  <% if params[:tab].present? %>
+    <li class="inactive_tab"><%= link_to "All" %></li>
+  <% else %>
+    <li class="active_tab">All</li>
+  <% end %>
   <% @groups.each do |g| %>
     <% if params[:tab] == g.name %>
-      <li class="active_tab"><%= link_to "#{g.name}", :tab => "#{g.name}" %></li>
+      <li class="active_tab"><%= g.name %></li>
     <% else %>
       <li class="inactive_tab"><%= link_to "#{g.name}", :tab => "#{g.name}" %></li>
     <% end %>
@@ -25,7 +30,7 @@
 <% @list.each do |call| %>
   <div id ="method_<%= call.id %>">
     <h4><%= link_to_function "#{call.method_name}", "my_toggle('method_detail_#{call.id}')" %></h4> |
-    <%= link_to 'Show', call, :method => :get %> |
+    <%= link_to 'Details', call, :method => :get %> |
     <%= link_to 'Edit', edit_call_path(call), :method => :get %> |
 
     <% # if the URL doesn't contain "admin=true" then let's not show the 'delete' button :) %>

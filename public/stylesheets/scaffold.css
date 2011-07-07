@@ -47,7 +47,6 @@ body, p, ol, ul, td {
 }
 
 /* Container  */
-
 #container {
   padding: 20px;
   margin: auto;
@@ -74,7 +73,10 @@ body, p, ol, ul, td {
   list-style-type: none;
   display: inline;
   padding: 8px 1em; 
-  
+  border-top-left-radius: .5em;
+  -moz-border-top-left-radius: .5em;
+  border-top-right-radius: .5em;
+  -moz-border-top-right-radius: .5em;
 }
 #group_tabs li.inactive_tab {
   background-color: #f9f9f9;
@@ -194,4 +196,7 @@ tr:hover { background-color: #D1E3EF; }
 p > div {
   margin-left: 10px;
 }
+
+.help { padding: 1em 0em; }
+.help:hover { background-color: #f9f9f9; }
 

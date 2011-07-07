@@ -3,7 +3,7 @@
 <head>
   <title>Commerce API</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag 'jquery', 'jquery_ujs', 'application', 'rails', 'toggle' %>
+  <%= javascript_include_tag 'jquery', 'jquery_ujs', 'application', 'toggle' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
@@ -12,6 +12,7 @@
     <li><%= link_to 'Home', root_path %><span class="divider">|</span></li>
     <li><%= link_to 'API Methods', calls_path %><span class="divider">|</span></li>
     <li><%= link_to 'Common Parameters', common_params_path %><span class="divider">|</span></li>
+    <li><%= link_to 'Groups', groups_path %><span class="divider">|</span></li>
     <li><%= link_to 'Help', help_path %></li>
     <li><div id="user_nav">
       <% if user_signed_in? %>
@@ -31,6 +32,7 @@
   <ul id="lower_nav">
     <li><%= link_to 'API Methods', calls_path %><span class="divider">|</span></li>
     <li><%= link_to 'Common Parameters', common_params_path %><span class="divider">|</span></li>
+    <li><%= link_to 'Groups', groups_path %><span class="divider">|</span></li>
     <li><%= link_to 'Help', help_path %></li>
   </ul>
 

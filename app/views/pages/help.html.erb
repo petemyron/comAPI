@@ -2,31 +2,64 @@
 
 <p>This tool has a couple tricks to it that you'll need to know about.</p>
 
+<div class="help">
+  <h2>Introduction - How it works</h2>
 
-<p>First, when creating or editing a new API call, there is a special phrase that must be used in order for the system to dynamically pick up any corresponding fields you want. This phrase is a no-spaces-allowed field encapsulated in "<span class="xml">#</span>" marks. When the # phrase matches a row in the Common Parameters table, this application automatically fills in the # phrase with the value of that row.</p>
-
-<p>Let's look at an example.</p>
-
-<p>Here's the "<span class="xml">getCatalogs</span>" call. Notice the # phrase "<span class="xml">#user_agent#</span>".</p>
-
-<div class="indent">
-  <%= image_tag 'getcatalogs.png' %>
-</div>
-
-<p>Now, look at the Common Parameters table at the bottom and see the row named exactly "<span class="xml">user_agent</span>" with the value "<span class="xml">BlackBerry9800/</span>".</p>
-
-<div class="indent">
-  <%= image_tag 'user_agent.png' %>
-</div>
-
-<p>If you click on the the "Execute" button next to getCatalogs, the resulting page will show that the "XML sent as" field shows that the proper value was put in place of the # phrase.</p>
-
-<div class="indent">
-  <%= image_tag 'execute.png' %>
+  <p>First, when creating or editing a new API call, there is a special phrase that must be used in order for the system to dynamically pick up any corresponding fields you want. This phrase is a no-spaces-allowed field encapsulated in "<span class="xml">#</span>" marks. When the # phrase matches a row in the Common Parameters table, this application automatically fills in the # phrase with the value of that row.</p>
+  <p>Let's look at an example.</p>
+  <p>Here's the "<span class="xml">getCatalogs</span>" call. Notice the # phrase "<span class="xml">#user_agent#</span>".</p>
+  <div class="indent">
+    <%= image_tag 'getcatalogs.png' %>
+  </div>
+  <p>Now, look at the Common Parameters table at the bottom and see the row named exactly "<span class="xml">user_agent</span>" with the value "<span class="xml">BlackBerry9800/</span>".</p>
+  <div class="indent">
+    <%= image_tag 'user_agent.png' %>
+  </div>
+  <p>If you click on the the "Execute" button next to getCatalogs, the resulting page will show the output and that the proper value was put in place of the # phrase.</p>
+  <div class="indent">
+    <%= image_tag 'execute.png' %>
+  </div>
 </div>
 
 
-<h2>Administrate</h2>
+<div class="help">
+  <h2>How to add a new call</h2>
+  <p>From either the Home page or the API Methods page, find the button labeled "New Call"</p>
+  <div class="indent">
+    <%= button_to 'New Call', new_call_path, :method => :get %>
+  </div>
+  <p>Now:
+    <ul class="list">
+      <li>Enter all the fields and hit "Create Call"</li>
+      <li>The Method Name must be unique</li>
+      <li>Choose whether this call is HTTP GET or POST</li>
+      <li>Select a group or create a new one</li>
+      <li>Enter the body of the API request</li>
+    </ul>
+  </p>
+</div>
 
-<p>The "delete" command was hidden in order to prevent common-folk from deleting a perfectly good API call permanently. You can override this by adding "<%= link_to '?admin=true', root_url( :admin => "true" ) %>" to the end of the homepage's URL.</p>
+
+<div class="help">
+  <h2>GET/POST distinction</h2>
+  <p>Most API calls are sent with HTTP POST request type because they generally include some data in the body of the request. HTTP GET, on the other hand, usually just fetches a URL. I suspect that POST will be used in this tool most often since it's really designed to test APIs requiring some specific input to get some specific output.</p>
+</div>
+
+
+<div class="help">
+  <h2>How to add a new group</h2>
+  <p>Adding a new group is only done by either creating a new call or editing an existing one. Either way, it's the same interface to creating a new group. When creating or editing a call, there's a drop down menu that shows the existing groups. You can either choose one of those or use the empty text box to the right to create your own.</p>
+  <div class="indent">
+    <%= image_tag 'new_group.png' %>
+  </div>
+</div>
+
+
+<div class="help">
+  <h2>How to delete a call or group</h2>
+  <p>The "delete" command was hidden in order to prevent common-folk from deleting a perfectly good API call permanently. You can override this by adding "<%= link_to '?admin=true', root_url( :admin => "true" ) %>" to the end of the respective page's URL and a magical delete button will appear.</p>
+  <div class="indent">
+    <%= image_tag 'delete.png' %>
+  </div>
+</div>
 

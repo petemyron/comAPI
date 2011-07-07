@@ -7,7 +7,9 @@
     <th>Calls</th>
     <th></th>
     <th></th>
-    <th></th>
+    <% if admin? %>
+      <th></th>
+    <% end %>
   </tr>
 
 <% @groups.each do |group| %>
@@ -20,7 +22,9 @@
     </td>
     <td><%= link_to 'Show', group %></td>
     <td><%= link_to 'Edit', edit_group_path(group) %></td>
-    <td><%= link_to 'Destroy', group, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if admin? %>
+      <td><%= button_to 'Delete', group, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

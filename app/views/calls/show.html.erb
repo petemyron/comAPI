@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @call.method_name %> - <%= @call.group.name %></h1>
+<h1><%= @call.method_name %> - 
+  <% if @call.group_id == nil %>
+    <%= @call.group.name %>
+  <% else %>
+    <%= link_to 'add to group', edit_call_path(@call) %>
+  <% end %></h1>
 
 <%= field_set_tag "#{@call.method_type.upcase} - #{@call.endpoint_uri}" do %>
   <div class="xml"><%= @call.xml %></div>
