@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<%= field_set_tag "#{@log.method_type.upcase} - #{@log.endpoint_uri}" do %>
+  <div class="xml"><%= Nokogiri::XML(@log.request) %></div>
+<% end %>
+
+<%= field_set_tag "Response - #{@log.created_at} by #{current_user.email}" do %>
+  <div class="xml"><%= Nokogiri::XML(@log.response) %></div>
+<% end %>
+
+<%= link_to 'Back', logs_path %>

@@ -1,0 +1,57 @@
+<h1>Listing logs</h1>
+
+<%#= link_to 'DELETE ME - New Log', new_log_path %>
+
+<%= form_tag logs_path, :method => 'get', :id => "logs_search_form" do %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+
+<ul id="tabs">
+<% if user_signed_in? %>
+  <% if params[:see_all].present? %><%# user is signed in and on the 'All' tab  %>
+    <li class="active_tab">All</li>
+    <li class="inactive_tab"><%= link_to "Mine" %></li>
+  <% else %><%# user is signed in and on the 'Mine' tab%>
+    <li class="inactive_tab"><%= link_to "All", :see_all => "true" %></li>
+    <li class="active_tab">Mine</li>
+  <% end %>
+<% else %><%# user is not signed in %>
+  <li class="active_tab">All</li>
+  <li class="inactive_tab"><%= link_to 'Register', new_user_registration_path %>
+<% end %>
+</ul>    
+
+<div class="list" id ="method_list">
+
+<% @logs.each do |log| %>
+  <div id ="method_<%= log.id %>">
+    <h4><%= link_to_function "#{log.method_name}", "my_toggle('method_detail_#{log.id}')" %></h4>
+    <span class="shrink">
+      (<%= log.created_at %>)
+    </span>
+    | <%= link_to 'Details', log, :method => :get %>
+
+    <% # if the URL doesn't contain "admin=true" then let's not show the 'delete' button :) %>
+    <% if params[:admin].to_s == "true" %>
+      | <%= link_to 'Delete', log, :confirm => 'Are you sure?', :method => :delete %>
+    <% end %>
+
+    <div class="hidden" id ="method_detail_<%= log.id %>">
+      <%= field_set_tag "#{log.method_type.upcase} - #{log.endpoint_uri}" do %>
+        <div class="xml">
+<%= Nokogiri::XML(log.request) %>
+        </div>
+      <% end %>
+      <%= field_set_tag "Response" do %>
+        <div class="xml">
+<%= Nokogiri::XML(log.response) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+<% end %>
+</div>
+
+<%= will_paginate @logs %>

@@ -1,0 +1,61 @@
+TODO
+
+
+ComAPI app
+========================
+x add user model with Devise
+  + add favorites (groups and calls)
+
+x add grouping of APIs
+  x don't forget that if groups are deleted, that those calls should do *something*, notify or delete
+  x show tabs of groups
+  + create a user field for last viewed group and show it first, if it is set, otherwise show the first
+    - update the field every time the user selects a different group to show
+    - will have to clean the user table if a group is deleted
+  + search within a group, not all calls  
+  x need to fix the tab styling still
+  x add an "all" tab, which should also include orphaned calls (with a delete)
+  
+x add logging of calls
+  x :request, :response, :timestamps, :user_id
+  x add more fields: :method_type, :endpoint_uri
+  + adjust timestamps for local machine time zone
+  x add search of the call logs
+  x add pagination
+  x default to see only *my* requests, if logged in
+    x otherwise, link_to registration page
+
+- add CodeRay for XML formatting
+
+x add jQuery
+
+- add highlighting of common_params used in a hovered API call
+
+- add email server for recovering logins
+
+- add testing with rspec
+
+- add ability to reset all xml requests
+
+x add GET|POST ability
+  x add other REST states
+
+
+FYI
+----
+images with highlights have #ffa200 (orange color) with #858585 (gray) border and 50% opacity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
