@@ -1,4 +1,7 @@
 <%= form_for(@call) do |f| %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
   <% if @call.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@call.errors.count, "error") %> prohibited this call from being saved:</h2>
@@ -21,7 +24,7 @@
   </div>
   <div class="field">
     <%= f.label :method_type %><br/>
-    <%= f.select :method_type, options_for_select( [ "get", "post" ], @call.method_type) %>
+    <%= f.select :method_type, options_for_select( [ "GET", "POST", "PUT", "DELETE" ], @call.method_type) %>
   </div>
   <div class="field">
     <%= f.label :group_id %><br />

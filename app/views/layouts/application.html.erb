@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Commerce API</title>
+  <title>ATT - "API Testing Tool"</title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag 'jquery', 'jquery_ujs', 'application', 'toggle' %>
   <%= csrf_meta_tag %>
@@ -9,10 +9,11 @@
 <body>
 
   <ul id="upper_nav">
-    <li><%= link_to 'Home', root_path %><span class="divider">|</span></li>
-    <li><%= link_to 'API Methods', calls_path %><span class="divider">|</span></li>
-    <li><%= link_to 'Common Parameters', common_params_path %><span class="divider">|</span></li>
-    <li><%= link_to 'Groups', groups_path %><span class="divider">|</span></li>
+    <li><%= link_to 'Home', root_path %> <span class="divider">|</span></li>
+    <li><%= link_to 'API Methods', calls_path %> <span class="divider">|</span></li>
+    <li><%= link_to 'Common Parameters', common_params_path %> <span class="divider">|</span></li>
+    <li><%= link_to 'Groups', groups_path %> <span class="divider">|</span></li>
+    <li><%= link_to 'History', logs_path %> <span class="divider">|</span></li>
     <li><%= link_to 'Help', help_path %></li>
     <li><div id="user_nav">
       <% if user_signed_in? %>
@@ -30,9 +31,10 @@
   </div>
 
   <ul id="lower_nav">
-    <li><%= link_to 'API Methods', calls_path %><span class="divider">|</span></li>
-    <li><%= link_to 'Common Parameters', common_params_path %><span class="divider">|</span></li>
-    <li><%= link_to 'Groups', groups_path %><span class="divider">|</span></li>
+    <li><%= link_to 'API Methods', calls_path %> <span class="divider">|</span></li>
+    <li><%= link_to 'Common Parameters', common_params_path %> <span class="divider">|</span></li>
+    <li><%= link_to 'Groups', groups_path %> <span class="divider">|</span></li>
+    <li><%= link_to 'History' %> <span class="divider">|</span></li>
     <li><%= link_to 'Help', help_path %></li>
   </ul>
 

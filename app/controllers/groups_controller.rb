@@ -73,12 +73,7 @@ class GroupsController < ApplicationController
   # DELETE /groups/1.xml
   def destroy
     @group = Group.find(params[:id])
-    @list = Call.find_all_by_group_id(params[:id])
-    
-    @list.each do |call|
-      call.group_id = nil
-    end
-    
+   
     @group.destroy
 
     respond_to do |format|

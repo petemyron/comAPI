@@ -12,6 +12,7 @@ gem 'awesome_print', :require => 'ap'
 gem 'nokogiri'
 gem 'devise'
 gem 'jquery-rails'
+gem 'will_paginate', "~> 3.0.pre2"
 
 
 #gem 'rake', '0.8.7'

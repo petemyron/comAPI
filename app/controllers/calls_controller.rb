@@ -152,37 +152,46 @@ require 'nokogiri'
     @parsed_xml = Nokogiri::XML(@response.body)
 
     # log some results
-    if @response.success?
-      logger.warn("-----------")
-      logger.warn("HTTP code: #{@response.code.to_s}")
-      logger.warn("Time: #{@response.time.to_s}")
-      logger.warn("Headers: #{@response.headers}")
-      logger.warn("Body: #{@response.body}")
-      logger.warn("-----------")
-    elsif @response.timed_out?
-      # the response timed out
-      logger.warn("-----------")
-      logger.warn("The API call '#{@call.method_name}' timed out")
-      logger.warn("-----------")
-    elsif @response.code == 0
-      # Could not get an http response, something's wrong.
-      logger.warn("-----------")
-      logger.warn("curl_error_message: #{@response.curl_error_message}")
-      logger.warn("-----------")
-    else
-      # Received a non-successful http response.
-      logger.warn("-----------")
-      logger.warn("HTTP code: #{@response.code.to_s}")
-      logger.warn("Time: #{@response.time.to_s}")
-      logger.warn("Headers: #{@response.headers}")
-      logger.warn("Body: #{@response.body}")
-      logger.warn("-----------")
+#    if @response.success?
+#      logger.warn("-----------")
+#      logger.warn("HTTP code: #{@response.code.to_s}")
+#      logger.warn("Time: #{@response.time.to_s}")
+#      logger.warn("Headers: #{@response.headers}")
+#      logger.warn("Body: #{@response.body}")
+#      logger.warn("-----------")
+#    elsif @response.timed_out?
+#      # the response timed out
+#      logger.warn("-----------")
+#      logger.warn("The API call '#{@call.method_name}' timed out")
+#      logger.warn("-----------")
+#    elsif @response.code == 0
+#      # Could not get an http response, something's wrong.
+#      logger.warn("-----------")
+#      logger.warn("curl_error_message: #{@response.curl_error_message}")
+#      logger.warn("-----------")
+#    else
+#      # Received a non-successful http response.
+#      logger.warn("-----------")
+#      logger.warn("HTTP code: #{@response.code.to_s}")
+#      logger.warn("Time: #{@response.time.to_s}")
+#      logger.warn("Headers: #{@response.headers}")
+#      logger.warn("Body: #{@response.body}")
+#      logger.warn("-----------")
+#    end
+
+
+    # Only if the user is signed in, add the call to the log
+    if user_signed_in?
+      @new_log_entry = Log.new(
+                          :method_name => @call.method_name, 
+                          :user_id => current_user.id, 
+                          :request => @modified_xml, 
+                          :response => @response.body,
+                          :method_type => @call.method_type,
+                          :endpoint_uri => @call.endpoint_uri
+                          )
+      @new_log_entry.save
     end
-
-    # calculate the duration it took to make the call
-    @duration = Time.now - @start_time
-
-
 
   end
 

@@ -25,5 +25,8 @@ ComAPI::Application.configure do
   
   # devise
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  
+  # roll logs
+  config.logger = Logger.new(Rails.root.join("log",Rails.env + ".log"),10,5*1024*1024)
 end
 

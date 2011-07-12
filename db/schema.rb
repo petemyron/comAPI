@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110701181614) do
+ActiveRecord::Schema.define(:version => 20110711215032) do
 
   create_table "calls", :force => true do |t|
     t.string   "method_name"
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(:version => 20110701181614) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "logs", :force => true do |t|
+    t.string   "method_name"
+    t.text     "request"
+    t.text     "response"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "method_type"
+    t.string   "endpoint_uri"
   end
 
   create_table "users", :force => true do |t|

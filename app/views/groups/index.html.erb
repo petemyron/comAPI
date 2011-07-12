@@ -16,14 +16,17 @@
   <tr>
     <td><%= group.name %></td>
     <td><%= group.description %></td>
-    <td><% group.calls.each do |call| %>
-          <%= call.method_name %><br />
-        <% end %>
+    <td>
+      <ul>
+      <% group.calls.each do |call| %>
+        <li><%= call.method_name %></li>
+      <% end %>
+      </ul>
     </td>
     <td><%= link_to 'Show', group %></td>
     <td><%= link_to 'Edit', edit_group_path(group) %></td>
     <% if admin? %>
-      <td><%= button_to 'Delete', group, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= button_to 'Delete', group, :confirm => 'Are you sure? This will delete ALL methods in the group!', :method => :delete %></td>
     <% end %>
   </tr>
 <% end %>

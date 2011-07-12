@@ -1,14 +1,14 @@
-<h2><%= @call.method_name + " - " + @call.group.name %></h2>
+<h2><%= @call.method_name %> - <%= @call.group.name %></h2>
 
 <h3>Input</h3>
 <div class="indent">
 
-  <% field_set_tag "#{@call.method_type.upcase} - #{@call.endpoint_uri}:" do -%>
+  <%= field_set_tag "#{@call.method_type.upcase} - #{@call.endpoint_uri}:" do %>
     <div>User-Agent: <span class="xml"><%= @ua %></span></div>
     <div>Subno: <span class="xml"><%= @subno %></span></div>
     <br/>
     <div class="xml"><%= @modified_xml %></div>
-  <% end -%>
+  <% end %>
 
   <br />
   <%= link_to 'Edit', edit_call_path(@call) %> |
@@ -18,15 +18,15 @@
 
 <h3>Output</h3>
 <div class="indent">
-  <% field_set_tag 'Received Headers:' do -%>
+  <%= field_set_tag 'Received Headers:' do %>
     <div>Duration: <span class="xml"><%= @response.time %></span></div>
     <br/>
     <div class="xml"><%= @response.headers %></div>
-  <% end -%>
+  <% end %>
 
-  <% field_set_tag 'Body:' do -%>
+  <%= field_set_tag 'Body:' do %>
     <div class="xml"><%= @parsed_xml %></div>
-  <% end -%>
+  <% end %>
 </div>
 
 
