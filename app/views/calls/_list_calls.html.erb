@@ -31,7 +31,7 @@
 
 <%# List of methods %>
 <div class="list" id ="method_list">
-<% @list.each do |call| %>
+<% @list.sort_by(&:method_name).each do |call| %>
   <div id ="method_<%= call.id %>">
     <h4><%= link_to_function "#{call.method_name}", "my_toggle('method_detail_#{call.id}')" %></h4> |
     <%= link_to 'Details', call, :method => :get %> |
