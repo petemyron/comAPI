@@ -7,12 +7,20 @@ class CallsControllerTest < ActionController::TestCase
 
   setup do
     @call = calls(:one)
+    @update = {
+      :method_name => 'MyString3',
+      :endpoint_uri => 'MyString3',
+      :group_id => 1,
+      :xml => 'MyText3',
+      :method_type => 'POST'
+    }
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:calls)
+#    assert_not_nil assigns(:calls)
+    assert_not_nil assigns(:list)
   end
 
   test "should get new" do
@@ -22,7 +30,7 @@ class CallsControllerTest < ActionController::TestCase
 
   test "should create call" do
     assert_difference('Call.count') do
-      post :create, :call => @call.attributes
+      post :create, :call => @update
     end
 
     assert_redirected_to call_path(assigns(:call))

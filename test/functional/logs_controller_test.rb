@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class LogsControllerTest < ActionController::TestCase
+    
+  # Devise helpers
+  include Devise::TestHelpers
+  
   setup do
     @log = logs(:one)
   end

@@ -3,6 +3,7 @@
 <%= form_tag home_path, :method => 'get', :id => "cp_search_form" do %>
   <p>
     <%= hidden_field_tag :search, params[:search], :id => "hidden_search" %>
+    <%= hidden_field_tag :tab, params[:tab], :id => "hidden_tab" %>
     <%= text_field_tag :cp_search, params[:cp_search] %>
     <%= submit_tag "Search", :name => nil %>
   </p>

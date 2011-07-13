@@ -7,6 +7,9 @@ class GroupsControllerTest < ActionController::TestCase
 
   setup do
     @group = groups(:one)
+    @update = {
+      :name => "update"
+    }
   end
 
   test "should get index" do
@@ -22,7 +25,7 @@ class GroupsControllerTest < ActionController::TestCase
 
   test "should create group" do
     assert_difference('Group.count') do
-      post :create, :group => @group.attributes
+      post :create, :group => @update
     end
 
     assert_redirected_to group_path(assigns(:group))

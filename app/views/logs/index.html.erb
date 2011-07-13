@@ -9,14 +9,14 @@
 
 <ul id="tabs">
 <% if user_signed_in? %>
-  <% if params[:see_all].present? %><%# user is signed in and on the 'All' tab  %>
+  <% if params[:see_all].present? %> <%# user is signed in and on the 'All' tab  %>
     <li class="active_tab">All</li>
     <li class="inactive_tab"><%= link_to "Mine" %></li>
-  <% else %><%# user is signed in and on the 'Mine' tab%>
+  <% else %> <%# user is signed in and on the 'Mine' tab%>
     <li class="inactive_tab"><%= link_to "All", :see_all => "true" %></li>
     <li class="active_tab">Mine</li>
   <% end %>
-<% else %><%# user is not signed in %>
+<% else %> <%# user is not signed in %>
   <li class="active_tab">All</li>
   <li class="inactive_tab"><%= link_to 'Register', new_user_registration_path %>
 <% end %>
@@ -32,9 +32,13 @@
     </span>
     | <%= link_to 'Details', log, :method => :get %>
 
-    <% # if the URL doesn't contain "admin=true" then let's not show the 'delete' button :) %>
-    <% if params[:admin].to_s == "true" %>
-      | <%= link_to 'Delete', log, :confirm => 'Are you sure?', :method => :delete %>
+    <% # only users that are signed in and add "admin=true" to the URL get to see the 'delete' button :) %>
+    <% if user_signed_in? %>
+      <% if (params[:admin].to_s == "true" && log.user_id == current_user.id) %>
+        | <%= link_to 'Delete', log, :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+    <% else %> <%# Not logged in, plus "admin=true" in the URL, direct them to login first %>
+        | <%= link_to 'Login to be able to delete', new_user_session_path %>
     <% end %>
 
     <div class="hidden" id ="method_detail_<%= log.id %>">

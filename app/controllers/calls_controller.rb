@@ -9,18 +9,11 @@ require 'nokogiri'
   # GET /calls
   # GET /calls.xml
   def index
-    @calls = Call.search(params[:search])
     @groups = Group.select("DISTINCT name, id") # used to show the tabs/available groups
     
     # give the view the correct list, depending on whether or not there's a URL param already 
     # included or the user has recently visited a specific group
-#    if params[:tab]
-    if params[:tab]
-      @group_id = @groups.find_by_name("#{params[:tab]}").id
-      @list = Call.find_all_by_group_id(@group_id).sort_by(&:method_name)
-    else
-      @list = @calls.sort_by(&:method_name) # works!
-    end
+    @list = Call.search(params[:search], params[:tab])
 
     respond_to do |format|
       format.html # index.html.erb
