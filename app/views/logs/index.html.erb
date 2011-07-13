@@ -28,7 +28,7 @@
   <div id ="method_<%= log.id %>">
     <h4><%= link_to_function "#{log.method_name}", "my_toggle('method_detail_#{log.id}')" %></h4>
     <span class="shrink">
-      (<%= log.created_at %>)
+      (<%= "#{log.created_at.localtime} - by #{log.user.email}" %>)
     </span>
     | <%= link_to 'Details', log, :method => :get %>
 
@@ -37,12 +37,14 @@
       <% if (params[:admin].to_s == "true" && log.user_id == current_user.id) %>
         | <%= link_to 'Delete', log, :confirm => 'Are you sure?', :method => :delete %>
       <% end %>
-    <% else %> <%# Not logged in, plus "admin=true" in the URL, direct them to login first %>
+    <% else %> <%# Not logged in %>
+      <% if params[:admin].to_s == "true" %> <%#"admin=true" in the URL, direct them to login first %>
         | <%= link_to 'Login to be able to delete', new_user_session_path %>
+      <% end %>
     <% end %>
 
     <div class="hidden" id ="method_detail_<%= log.id %>">
-      <%= field_set_tag "#{log.method_type.upcase} - #{log.endpoint_uri}" do %>
+      <%= field_set_tag "#{log.method_type} - #{log.endpoint_uri}" do %>
         <div class="xml">
 <%= Nokogiri::XML(log.request) %>
         </div>

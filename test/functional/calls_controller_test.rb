@@ -7,6 +7,7 @@ class CallsControllerTest < ActionController::TestCase
 
   setup do
     @call = calls(:one)
+    
     @update = {
       :method_name => 'MyString3',
       :endpoint_uri => 'MyString3',
@@ -14,6 +15,7 @@ class CallsControllerTest < ActionController::TestCase
       :xml => 'MyText3',
       :method_type => 'POST'
     }
+    @user = users(:one)
   end
 
   test "should get index" do
@@ -57,5 +59,14 @@ class CallsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to calls_path
+  end
+  
+  test "should log the call if signed in" do
+    sign_in @user
+    get :make_request, :id => @call.to_param
+  end
+  
+  test "should not log the call if not signed in" do
+    
   end
 end

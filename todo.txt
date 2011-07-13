@@ -19,7 +19,7 @@ x add grouping of APIs
 x add logging of calls
   x :request, :response, :timestamps, :user_id
   x add more fields: :method_type, :endpoint_uri
-  + adjust timestamps for local machine time zone
+  x adjust timestamps for local machine time zone
   x add search of the call logs
   x add pagination
   x default to see only *my* requests, if logged in
@@ -39,6 +39,11 @@ x add jQuery
 
 x add GET|POST ability
   x add other REST states
+
+- Manage SSL certs
+
+- Customize headers
+
 
 
 FYI

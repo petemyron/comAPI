@@ -4,10 +4,10 @@ one:
   request: MyText
   response: MyText
   method_name: MyMethod
-  user_id: 1
+  user: one
 
 two:
   request: MyText
   response: MyText
   method_name: MyMethod
-  user_id: 1
+  user: one

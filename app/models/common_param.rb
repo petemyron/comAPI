@@ -7,5 +7,5 @@ class CommonParam < ActiveRecord::Base
       scoped
     end
   end
-end
 
+end
