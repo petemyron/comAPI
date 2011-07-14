@@ -110,11 +110,9 @@ require 'nokogiri'
       @find = "#" + cp.name + "#"
 
       # Replace that string with the actual value
-      @modified_xml.sub!(@find, cp.value) # the last time this runs gives us the final @modified_xml string
+      # the last time this runs gives us the final @modified_xml string
+      @modified_xml.sub!(@find, cp.value) 
     end
-
-    # Let's time how long this takes
-    @start_time = Time.now
 
 
     # Load up some header variables
@@ -131,7 +129,7 @@ require 'nokogiri'
       :headers => { :content_type => "text/xml", :charset => "UTF-8", :"x-up-subno" => @subno },
       :body => @modified_xml,
       :user_agent => @ua,
-      :verbose => true # for debug
+      :verbose => false # set to true for debugging
     )
 
     # Schedule the task -- which runs immediately
@@ -143,34 +141,6 @@ require 'nokogiri'
     @response = @request.response
 
     @parsed_xml = Nokogiri::XML(@response.body)
-
-    # log some results
-#    if @response.success?
-#      logger.warn("-----------")
-#      logger.warn("HTTP code: #{@response.code.to_s}")
-#      logger.warn("Time: #{@response.time.to_s}")
-#      logger.warn("Headers: #{@response.headers}")
-#      logger.warn("Body: #{@response.body}")
-#      logger.warn("-----------")
-#    elsif @response.timed_out?
-#      # the response timed out
-#      logger.warn("-----------")
-#      logger.warn("The API call '#{@call.method_name}' timed out")
-#      logger.warn("-----------")
-#    elsif @response.code == 0
-#      # Could not get an http response, something's wrong.
-#      logger.warn("-----------")
-#      logger.warn("curl_error_message: #{@response.curl_error_message}")
-#      logger.warn("-----------")
-#    else
-#      # Received a non-successful http response.
-#      logger.warn("-----------")
-#      logger.warn("HTTP code: #{@response.code.to_s}")
-#      logger.warn("Time: #{@response.time.to_s}")
-#      logger.warn("Headers: #{@response.headers}")
-#      logger.warn("Body: #{@response.body}")
-#      logger.warn("-----------")
-#    end
 
 
     # Only if the user is signed in, add the call to the log

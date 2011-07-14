@@ -1,15 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: 1
   method_name: MyString
   endpoint_uri: MyString
-  group: one
+  group_id: 1
   xml: MyText1
   method_type: GET
 
 two:
+  id: 2
   method_name: MyString2
   endpoint_uri: MyString2
-  group: one
+  group_id: 1
   xml: MyText2
   method_type: POST

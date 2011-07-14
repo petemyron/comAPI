@@ -39,7 +39,11 @@ class CallsControllerTest < ActionController::TestCase
   end
 
   test "should show call" do
-    get :show, :id => @call.to_param
+    call = Call.new(:method_name => "something", :group_id => 1, :endpoint_uri => "somewhere")
+    call.build_group(:name => "group_name")
+    call.save
+    get :show, :id => call.to_param
+    
     assert_response :success
   end
 
@@ -61,12 +65,51 @@ class CallsControllerTest < ActionController::TestCase
     assert_redirected_to calls_path
   end
   
+  test "can sign_in" do
+    assert(sign_in @user)
+  end
+  
   test "should log the call if signed in" do
     sign_in @user
-    get :make_request, :id => @call.to_param
+    call = Call.new(:method_name => "something", :group_id => 1, :endpoint_uri => "somewhere", :xml => "xml")
+    call.save
+    assert_difference('Log.count') do
+      get :make_request, :id => call.to_param
+    end
   end
   
   test "should not log the call if not signed in" do
-    
+    sign_out @user
+    call = Call.new(:method_name => "something", :group_id => 1, :endpoint_uri => "somewhere", :xml => "xml")
+    call.save
+    assert_no_difference('Log.count') do
+      get :make_request, :id => call.to_param
+    end
   end
+  
+  test "should create new group from new call" do
+    call = Call.new(:method_name => "something", :new_group_name => "new_group", :endpoint_uri => "somewhere")
+    assert_difference('Group.count') do
+      post :create, :call => call
+    end
+    assert_redirected_to call_path(assigns(:call))
+  end
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

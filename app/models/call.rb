@@ -1,7 +1,7 @@
 class Call < ActiveRecord::Base
   validates :method_name, :presence => true, :uniqueness => true
   validates :endpoint_uri, :presence => true, :length => { :maximum => 255 }
-  validates :group_id, :presence => true
+  validates :group_id, :presence => true unless :new_group_name?
   
   belongs_to :group
   

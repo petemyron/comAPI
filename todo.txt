@@ -38,7 +38,7 @@ x add jQuery
 - add ability to reset all xml requests
 
 x add GET|POST ability
-  x add other REST states
+  x add other REST states, PUT, HEAD, DELETE
 
 - Manage SSL certs
 
@@ -48,9 +48,15 @@ x add GET|POST ability
 
 FYI
 ----
-images with highlights have #ffa200 (orange color) with #858585 (gray) border and 50% opacity
-
-
+- images with highlights have #ffa200 (orange color) with #858585 (gray) border and 50% opacity
+- helpful in rails console:
+  - log a user in (using the sign_in Devise helper)
+    user = User.new(:email => "test@test.com", :password => "abcdef", :password_confirmation => "abcdef")
+    user.save
+    app.post('users/sign_in', {"user" => {"email" => "test@test.com", "password" => "abcdef"}})
+    
+  - call a method (like make_request)
+    app.get '/calls/1/make_request'
 
 
 

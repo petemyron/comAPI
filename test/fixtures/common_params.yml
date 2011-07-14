@@ -1,9 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
-  value: MyString
+  id: 1
+  name: x-up-subno
+  value: mySubno
 
 two:
-  name: MyString
-  value: MyString
+  id: 2
+  name: user_agent
+  value: myUA

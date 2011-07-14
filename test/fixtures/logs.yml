@@ -1,13 +1,15 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
+  id: 1
   request: MyText
   response: MyText
   method_name: MyMethod
-  user: one
+  user_id: 1
 
 two:
+  id: 2
   request: MyText
   response: MyText
   method_name: MyMethod
-  user: one
+  user_id: 1

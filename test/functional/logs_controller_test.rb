@@ -10,6 +10,7 @@ class LogsControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
+    
     get :index
     assert_response :success
     assert_not_nil assigns(:logs)
@@ -29,7 +30,9 @@ class LogsControllerTest < ActionController::TestCase
   end
 
   test "should show log" do
-    get :show, :id => @log.to_param
+    log = Log.new(:method_name => "test", :user_id => 1)
+    log.save
+    get :show, :id => log.to_param
     assert_response :success
   end
 

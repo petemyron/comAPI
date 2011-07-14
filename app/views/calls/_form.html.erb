@@ -24,7 +24,7 @@
   </div>
   <div class="field">
     <%= f.label :method_type %><br/>
-    <%= f.select :method_type, options_for_select( [ "GET", "POST", "PUT", "DELETE" ], @call.method_type) %>
+    <%= f.select :method_type, options_for_select( [ "GET", "POST", "PUT", "DELETE", "HEAD" ], @call.method_type) %>
   </div>
   <div class="field">
     <%= f.label :group_id %><br />
