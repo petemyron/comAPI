@@ -14,4 +14,3 @@ two:
   id: 2
   email: user2@test.com
   encrypted_password: abcdef1
-  recent_group_id: 2

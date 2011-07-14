@@ -95,6 +95,29 @@ class CallsControllerTest < ActionController::TestCase
     assert_redirected_to call_path(assigns(:call))
   end
 
+
+##  Test recent_group_id
+  test "should show recent group if signed in and recent_group_id set" do
+    sign_in @user
+    group = @user.recent_group_id
+    get :index
+    assert_tag(:tag => 'li', :content => '#{group}',:attributes => {:class => 'active_tab'})
+    sign_out @user
+  end
+  
+  test "should show All tab if signed in and recent_group_id NOT set" do
+    sign_in users(:two)
+    # recent_group_id should not be assigned for user :two in the fixture
+    get :index
+    assert_tag(:tag => 'li', :content => 'All',:attributes => {:class => 'active_tab'})
+    sign_out users(:two)
+  end
+  
+  test "should show the All tab if user not signed in" do
+    get :index
+    assert_tag(:tag => 'li', :content => 'All',:attributes => {:class => 'active_tab'})
+  end
+
 end
 
 
