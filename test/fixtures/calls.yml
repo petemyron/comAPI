@@ -2,7 +2,7 @@
 
 one:
   id: 1
-  method_name: MyString
+  method_name: uno
   endpoint_uri: MyString
   group_id: 1
   xml: MyText1
@@ -10,7 +10,7 @@ one:
 
 two:
   id: 2
-  method_name: MyString2
+  method_name: dos
   endpoint_uri: MyString2
   group_id: 1
   xml: MyText2

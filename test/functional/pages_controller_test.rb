@@ -13,6 +13,7 @@ class PagesControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
+    assert_not_nil assigns(:calls)
   end
   
   test "should get help" do

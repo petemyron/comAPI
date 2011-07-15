@@ -11,27 +11,31 @@
   </p>
 <% end %>
 
-
 <%# Group tabs %>
 <ul id="tabs">
-  <% if params[:tab].present? %>
-    <li class="inactive_tab"><%= link_to "All", :search => params[:search], :cp_search => params[:cp_search] %></li>
+  <% if @tab == "All" %>
+        <li class="active_tab">All</li>
+    <% @groups.each do |g| %>
+        <li class="inactive_tab"><%= link_to "#{g.name}", :tab => "#{g.name}", :search => params[:search], :cp_search => params[:cp_search] %></li>
+    <% end %>
   <% else %>
-    <li class="active_tab">All</li>
-  <% end %>
-  <% @groups.each do |g| %>
-    <% if params[:tab] == g.name %>
-      <li class="active_tab"><%= g.name %></li>
-    <% else %>
-      <li class="inactive_tab"><%= link_to "#{g.name}", :tab => "#{g.name}", :search => params[:search], :cp_search => params[:cp_search] %></li>
+    <%# @tab is not All %>
+        <li class="inactive_tab"><%= link_to "All", :tab => "All", :search => params[:search], :cp_search => params[:cp_search] %></li>
+    <% @groups.each do |g| %>
+      <% if @tab == g.name %>
+        <li class="active_tab"><%= g.name %></li>
+      <% else %>
+        <li class="inactive_tab"><%= link_to "#{g.name}", :tab => "#{g.name}", :search => params[:search], :cp_search => params[:cp_search] %></li>
+      <% end %>
     <% end %>
   <% end %>
-</ul>    
+</ul>
+
 
 
 <%# List of methods %>
 <div class="list" id ="method_list">
-<% @list.sort_by(&:method_name).each do |call| %>
+<% @calls.sort_by(&:method_name).each do |call| %>
   <div id ="method_<%= call.id %>">
     <h4><%= link_to_function "#{call.method_name}", "my_toggle('method_detail_#{call.id}')" %></h4> |
     <%= link_to 'Details', call, :method => :get %> |

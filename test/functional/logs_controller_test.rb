@@ -53,4 +53,20 @@ class LogsControllerTest < ActionController::TestCase
 
     assert_redirected_to logs_path
   end
+  
+  test "paginates index" do
+    25.times do
+      log = Log.new(:method_name => 'test', :user_id => 1)
+      log.save
+    end
+    get :index
+    assert_tag(:tag => "a", :content => "Next &#8594;", :attributes => { :class => "next_page"})
+  end
+  
+  test "should not paginate index" do
+    log = Log.new(:method_name => 'test', :user_id => 1)
+    log.save
+    get :index
+    assert_no_tag(:tag => "a", :content => "Next &#8594;", :attributes => { :class => "next_page"})
+  end
 end
