@@ -13,14 +13,14 @@
 
 <%# Group tabs %>
 <ul id="tabs">
-  <% if @tab == "All" %>
+  <% if @tab == "all" || @tab == nil %>
         <li class="active_tab">All</li>
     <% @groups.each do |g| %>
         <li class="inactive_tab"><%= link_to "#{g.name}", :tab => "#{g.name}", :search => params[:search], :cp_search => params[:cp_search] %></li>
     <% end %>
   <% else %>
-    <%# @tab is not All %>
-        <li class="inactive_tab"><%= link_to "All", :tab => "All", :search => params[:search], :cp_search => params[:cp_search] %></li>
+    <%# @tab is not all %>
+        <li class="inactive_tab"><%= link_to "All", :tab => "all", :search => params[:search], :cp_search => params[:cp_search] %></li>
     <% @groups.each do |g| %>
       <% if @tab == g.name %>
         <li class="active_tab"><%= g.name %></li>

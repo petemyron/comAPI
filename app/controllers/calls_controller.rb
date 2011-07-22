@@ -11,34 +11,144 @@ require 'nokogiri'
   def index
     @groups = Group.select("DISTINCT name, id") # used to show the tabs/available groups
     
+#    if user_signed_in?
+#      if params[:tab]
+#        puts "\n----specific tab indicated".green
+#        @tab = params[:tab]
+#      elsif current_user.recent_group_id.present?
+#        puts "\n----group_id present".green
+#        @tab = Group.find(current_user.recent_group_id).name
+#      else
+#        puts "\n----@tab == nil".green
+#        @tab = "all"
+#      end
+#      if @tab != "all"
+#        current_user.recent_group_id = Group.find_by_name(@tab).id
+#      end
+#      
+#      puts "current_user.recent_group_id now == #{current_user.recent_group_id}".blue.on_white
+#    else  # user isn't signed in 
+#      if params[:tab]
+#        puts "\n----user not signed in - params[:tab] is present".green
+#        @tab = params[:tab]
+#      else
+#        puts "\n----user not signed in - @tab == nil".green
+#        @tab = "all"
+#      end
+#    end
+#    
+#    # set the user's recent_group_id if they're logged in
+#    if user_signed_in? 
+#        group_id = Group.find_by_name(@tab).id unless @tab == "all"
+#        puts "user_signed_in, group id: #{group_id}".red
+##      if current_user.recent_group_id != @group_id
+##        current_user.recent_group_id = @group_id
+##      end
+#    end
+    
+    
+
+    
+    # testing 
     if user_signed_in?
-      if params[:tab]
-#        puts "----params[:tab]"
+      if (params[:search].present? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.present?)
+        # should: search for search term, should go to 'all' tab, set recent to 'all'
+        puts "\nCONT 1: search.present, tab.present, tab == all, recent_group_id.present".yellowish
+        @tab = nil
+        current_user.update_recent_group_id("") #which defaults to the all tab
+        
+      elsif (params[:search].present? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.nil?)
+        # should: earch for search term, should go to 'all' tab, set recent to 'all'
+        puts "\nCONT 2: search.present, tab.present, tab == all, recent_group_id.nil".yellowish
+        @tab = nil
+        current_user.update_recent_group_id("") #which defaults to the all tab
+      
+      elsif (params[:search].present? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.present?)
+        # should: search for search term, should go to specific tab, set recent to specific tab
+        puts "\nCONT 3: search.present, tab.present, tab != all, recent_group_id.present".yellowish
         @tab = params[:tab]
-#        current_user.recent_group_id = Group.find_by_name(@tab).id unless @tab = "All"
-      elsif current_user.recent_group_id.present?
-#        puts "----group_id present"
+        group = Group.find_by_name(params[:tab])
+        current_user.update_recent_group_id(group.id)
+              
+      elsif (params[:search].present? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.nil?)
+        # should: search for search term, should go to specific tab, set recent to specific tab
+        puts "\nCONT 4: search.present, tab.present, tab != all, recent_group_id.nil".yellowish
+        @tab = params[:tab]
+        group = Group.find_by_name(params[:tab])
+        current_user.update_recent_group_id(group.id)
+      
+      elsif (params[:search].present? && params[:tab].nil? && current_user.recent_group_id.present?)
+        # should: search for search term, should go to recent group tab
+        puts "\nCONT 5: search.present, tab.nil, recent_group_id.present".yellowish
         @tab = Group.find(current_user.recent_group_id).name
-      else
-#        puts "----@tab = nil"
-        @tab = "All"
-      end
-    else  # user isn't signed in 
-      if params[:tab]
-#        puts "----user not signed in - params[:tab]"
+      
+      elsif (params[:search].present? && params[:tab].nil? && current_user.recent_group_id.nil?)
+        # should: search for search term, should go to 'all' tab, set recent to 'all'
+        puts "\nCONT 6: search.present, tab.nil, recent_group_id.nil".yellowish
+        @tab = nil
+        current_user.update_recent_group_id("") #which defaults to the all tab
+        
+      elsif (params[:search].nil? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.present?)
+        # should: should go to 'all' tab, set recent to 'all'
+        puts "\nCONT 7: search.nil, tab.present, tab == all, recent_group_id.present".yellowish
+        @tab = nil
+        current_user.update_recent_group_id("") #which defaults to the all tab
+        
+      elsif (params[:search].nil? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.nil?)
+        # should: should go to 'all' tab, set recent to 'all'
+        puts "\nCONT 8: search.nil, tab.present, tab == all, recent_group_id.nil".yellowish
+        @tab = nil
+        current_user.update_recent_group_id("") #which defaults to the all tab
+        
+      elsif (params[:search].nil? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.present?)
+        # should: should go to specific tab, set recent to specific tab
+        puts "\nCONT 9: search.nil, tab.present, tab != all, recent_group_id.present".yellowish
         @tab = params[:tab]
+        group = Group.find_by_name(params[:tab])
+        current_user.update_recent_group_id(group.id)
+        
+      elsif (params[:search].nil? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.nil?)
+        # should: should go to specific tab, set recent to specific tab
+        puts "\nCONT 10: search.nil, tab.present, tab != all, recent_group_id.nil".yellowish
+        @tab = params[:tab]
+        group = Group.find_by_name(params[:tab])
+        current_user.update_recent_group_id(group.id)
+        
+      elsif (params[:search].nil? && params[:tab].nil? && current_user.recent_group_id.present?)
+        # should: should go to recent group tab
+        puts "\nCONT 11: search.nil, tab.nil, recent_group_id.present".yellowish
+        @tab = Group.find(current_user.recent_group_id).name
+        
+      elsif (params[:search].nil? && params[:tab].nil? && current_user.recent_group_id.nil?)
+        # should: should go to 'all' tab, set recent to 'all'
+        puts "\nCONT 12: search.nil, tab.nil, recent_group_id.nil".yellowish
+        @tab = nil
+        current_user.update_recent_group_id("") #which defaults to the all tab
+        
       else
-#        puts "----user not signed in - @tab = nil"
-        @tab = "All"
       end
     end
     
-    # set the user's recent_group_id if they're logged in
-#    if user_signed_in? 
-#      if current_user.recent_group_id != @group_id
-#        current_user.recent_group_id = @group_id
-#      end
-#    end
+# options:
+# # | search | tab | tab == all | recent_group_id             | action
+# 1 | yes    | yes | yes        | yes                         | search for search term, should go to 'all' tab, set recent to 'all'
+# 2 | yes    | yes | yes        | no                          | search for search term, should go to 'all' tab, set recent to 'all'
+# 3 | yes    | yes | no         | yes                         | search for search term, should go to specific tab, set recent to specific tab
+# 4 | yes    | yes | no         | no                          | search for search term, should go to specific tab, set recent to specific tab
+# 5 | yes    | no  | no         | yes                         | search for search term, should go to recent group tab
+# 6 | yes    | no  | no         | no                          | search for search term, should go to 'all' tab, set recent to 'all'
+# 7 | no     | yes | yes        | yes                         | should go to 'all' tab, set recent to 'all'
+# 8 | no     | yes | yes        | no                          | should go to 'all' tab, set recent to 'all'
+# 9 | no     | yes | no         | yes                         | should go to specific tab, set recent to specific tab
+#10 | no     | yes | no         | no                          | should go to specific tab, set recent to specific tab
+#11 | no     | no  | no         | yes                         | should go to recent group tab
+
+# haven't made these yet
+#12 | no     | no  | no         | no                          | should go to 'all' tab, set recent to 'all'
+#   | yes    | no  | yes        | yes # can't actually happen |
+#   | yes    | no  | yes        | no  # can't actually happen |
+#   | no     | no  | yes        | yes # can't actually happen |
+#   | no     | no  | yes        | no  # can't actually happen |
 
     # give the view the correct list, depending on whether or not there's a URL param already 
     # included or the user has recently visited a specific group

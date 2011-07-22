@@ -1,2 +1,5 @@
-This application will be used to test the Motricity Commerce APIs in a more user-friendly manner. I haven't made it yet, so I don't know how it's actually going to work...
+This application was originally created to test some Motricity Commerce APIs, but it has since grown to be more flexible, handling nearly all types of request: GET, POST, PUT, DELETE, and HEAD. It takes a service endpoint and makes an HTTP request to that endpoint using the method defined for each call. 
 
+You'll need to watch out because a proxy is configured out of the box, so you'll need to update it before anything will work. Ashamedly, this configuration is actually in the calls controller... :| ... maybe someday I'll just move it out of there, but meh.
+
+Finally, the "Call" model should probably be renamed to something less recognizable as low-level system reserved words. 

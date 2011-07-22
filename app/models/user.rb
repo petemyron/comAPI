@@ -8,4 +8,10 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   
   has_many :logs
+  
+  def update_recent_group_id(id)
+#    puts "USER MOD: before #{self.recent_group_id}"
+    self.recent_group_id = id
+#    puts "USER MOD: after #{self.recent_group_id}"
+  end
 end
