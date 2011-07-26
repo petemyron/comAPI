@@ -73,6 +73,12 @@ class GroupsController < ApplicationController
   # DELETE /groups/1.xml
   def destroy
     @group = Group.find(params[:id])
+
+    # check to see if any users have this as a recent group id, change it to 'all' if so
+    users = User.find_all_by_recent_group_id(Group.find(params[:id]))
+    users.each do |u|
+      u.update_recent_group_id("")
+    end
    
     @group.destroy
 

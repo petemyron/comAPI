@@ -9,146 +9,157 @@ require 'nokogiri'
   # GET /calls
   # GET /calls.xml
   def index
+    puts "\n--calls#index".yellowish
+    
     @groups = Group.select("DISTINCT name, id") # used to show the tabs/available groups
     
-#    if user_signed_in?
-#      if params[:tab]
-#        puts "\n----specific tab indicated".green
-#        @tab = params[:tab]
-#      elsif current_user.recent_group_id.present?
-#        puts "\n----group_id present".green
-#        @tab = Group.find(current_user.recent_group_id).name
-#      else
-#        puts "\n----@tab == nil".green
-#        @tab = "all"
-#      end
-#      if @tab != "all"
-#        current_user.recent_group_id = Group.find_by_name(@tab).id
-#      end
-#      
-#      puts "current_user.recent_group_id now == #{current_user.recent_group_id}".blue.on_white
-#    else  # user isn't signed in 
-#      if params[:tab]
-#        puts "\n----user not signed in - params[:tab] is present".green
-#        @tab = params[:tab]
-#      else
-#        puts "\n----user not signed in - @tab == nil".green
-#        @tab = "all"
-#      end
-#    end
-#    
-#    # set the user's recent_group_id if they're logged in
-#    if user_signed_in? 
-#        group_id = Group.find_by_name(@tab).id unless @tab == "all"
-#        puts "user_signed_in, group id: #{group_id}".red
-##      if current_user.recent_group_id != @group_id
-##        current_user.recent_group_id = @group_id
-##      end
-#    end
-    
-    
-
-    
-    # testing 
+    # Determine which tab to show as active 
     if user_signed_in?
+    
+      # options:
+      # # | search | tab | tab == all | recent_group_id             | action
+      # 1 | yes    | yes | yes        | yes                         | search for search term, should go to 'all' tab, set recent to 'all'
+      # 2 | yes    | yes | yes        | no                          | search for search term, should go to 'all' tab, set recent to 'all'
+      # 3 | yes    | yes | no         | yes                         | search for search term, should go to specific tab, set recent to specific tab
+      # 4 | yes    | yes | no         | no                          | search for search term, should go to specific tab, set recent to specific tab
+      # 5 | yes    | no  | no         | yes                         | search for search term, should go to recent group tab
+      # 6 | yes    | no  | no         | no                          | search for search term, should go to 'all' tab, set recent to 'all'
+      # 7 | no     | yes | yes        | yes                         | go to 'all' tab, set recent to 'all'
+      # 8 | no     | yes | yes        | no                          | go to 'all' tab, set recent to 'all'
+      # 9 | no     | yes | no         | yes                         | go to specific tab, set recent to specific tab
+      #10 | no     | yes | no         | no                          | go to specific tab, set recent to specific tab
+      #11 | no     | no  | no         | yes                         | go to recent group tab
+      #12 | no     | no  | no         | no                          | go to 'all' tab, set recent to 'all'
+      
+      # Choose the right tab to show as active
       if (params[:search].present? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.present?)
         # should: search for search term, should go to 'all' tab, set recent to 'all'
-        puts "\nCONT 1: search.present, tab.present, tab == all, recent_group_id.present".yellowish
+        puts "CONT 1: search.present, tab.present, tab == all, recent_group_id.present".yellowish
         @tab = nil
         current_user.update_recent_group_id("") #which defaults to the all tab
         
-      elsif (params[:search].present? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.nil?)
+      elsif (params[:search].present? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.blank?)
         # should: earch for search term, should go to 'all' tab, set recent to 'all'
-        puts "\nCONT 2: search.present, tab.present, tab == all, recent_group_id.nil".yellowish
+        puts "CONT 2: search.present, tab.present, tab == all, recent_group_id.blank".yellowish
         @tab = nil
         current_user.update_recent_group_id("") #which defaults to the all tab
       
       elsif (params[:search].present? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.present?)
         # should: search for search term, should go to specific tab, set recent to specific tab
-        puts "\nCONT 3: search.present, tab.present, tab != all, recent_group_id.present".yellowish
+        puts "CONT 3: search.present, tab.present, tab != all, recent_group_id.present".yellowish
         @tab = params[:tab]
         group = Group.find_by_name(params[:tab])
         current_user.update_recent_group_id(group.id)
               
-      elsif (params[:search].present? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.nil?)
+      elsif (params[:search].present? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.blank?)
         # should: search for search term, should go to specific tab, set recent to specific tab
-        puts "\nCONT 4: search.present, tab.present, tab != all, recent_group_id.nil".yellowish
+        puts "CONT 4: search.present, tab.present, tab != all, recent_group_id.blank".yellowish
         @tab = params[:tab]
         group = Group.find_by_name(params[:tab])
         current_user.update_recent_group_id(group.id)
       
-      elsif (params[:search].present? && params[:tab].nil? && current_user.recent_group_id.present?)
+      elsif (params[:search].present? && params[:tab].blank? && current_user.recent_group_id.present?)
         # should: search for search term, should go to recent group tab
-        puts "\nCONT 5: search.present, tab.nil, recent_group_id.present".yellowish
+        puts "CONT 5: search.present, tab.blank, recent_group_id.present".yellowish
         @tab = Group.find(current_user.recent_group_id).name
       
-      elsif (params[:search].present? && params[:tab].nil? && current_user.recent_group_id.nil?)
+      elsif (params[:search].present? && params[:tab].blank? && current_user.recent_group_id.blank?)
         # should: search for search term, should go to 'all' tab, set recent to 'all'
-        puts "\nCONT 6: search.present, tab.nil, recent_group_id.nil".yellowish
+        puts "CONT 6: search.present, tab.blank, recent_group_id.blank".yellowish
         @tab = nil
         current_user.update_recent_group_id("") #which defaults to the all tab
         
-      elsif (params[:search].nil? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.present?)
-        # should: should go to 'all' tab, set recent to 'all'
-        puts "\nCONT 7: search.nil, tab.present, tab == all, recent_group_id.present".yellowish
+      elsif (params[:search].blank? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.present?)
+        # should: go to 'all' tab, set recent to 'all'
+        puts "CONT 7: search.blank, tab.present, tab == all, recent_group_id.present".yellowish
         @tab = nil
         current_user.update_recent_group_id("") #which defaults to the all tab
         
-      elsif (params[:search].nil? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.nil?)
-        # should: should go to 'all' tab, set recent to 'all'
-        puts "\nCONT 8: search.nil, tab.present, tab == all, recent_group_id.nil".yellowish
+      elsif (params[:search].blank? && params[:tab].present? && params[:tab] == 'all' && current_user.recent_group_id.blank?)
+        # should: go to 'all' tab, set recent to 'all'
+        puts "CONT 8: search.blank, tab.present, tab == all, recent_group_id.blank".yellowish
         @tab = nil
         current_user.update_recent_group_id("") #which defaults to the all tab
         
-      elsif (params[:search].nil? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.present?)
-        # should: should go to specific tab, set recent to specific tab
-        puts "\nCONT 9: search.nil, tab.present, tab != all, recent_group_id.present".yellowish
+      elsif (params[:search].blank? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.present?)
+        # should: go to specific tab, set recent to specific tab
+        puts "CONT 9: search.blank, tab.present, tab != all, recent_group_id.present".yellowish
         @tab = params[:tab]
         group = Group.find_by_name(params[:tab])
         current_user.update_recent_group_id(group.id)
         
-      elsif (params[:search].nil? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.nil?)
-        # should: should go to specific tab, set recent to specific tab
-        puts "\nCONT 10: search.nil, tab.present, tab != all, recent_group_id.nil".yellowish
+      elsif (params[:search].blank? && params[:tab].present? && params[:tab] != 'all' && current_user.recent_group_id.blank?)
+        # should: go to specific tab, set recent to specific tab
+        puts "CONT 10: search.blank, tab.present, tab != all, recent_group_id.blank".yellowish
         @tab = params[:tab]
         group = Group.find_by_name(params[:tab])
         current_user.update_recent_group_id(group.id)
         
-      elsif (params[:search].nil? && params[:tab].nil? && current_user.recent_group_id.present?)
-        # should: should go to recent group tab
-        puts "\nCONT 11: search.nil, tab.nil, recent_group_id.present".yellowish
+      elsif (params[:search].blank? && params[:tab].blank? && current_user.recent_group_id.present?)
+        # should: go to recent group tab
+        puts "CONT 11: search.blank, tab.blank, recent_group_id.present".yellowish
         @tab = Group.find(current_user.recent_group_id).name
         
-      elsif (params[:search].nil? && params[:tab].nil? && current_user.recent_group_id.nil?)
-        # should: should go to 'all' tab, set recent to 'all'
-        puts "\nCONT 12: search.nil, tab.nil, recent_group_id.nil".yellowish
+      elsif (params[:search].blank? && params[:tab].blank? && current_user.recent_group_id.blank?)
+        # should: go to 'all' tab, set recent to 'all'
+        puts "CONT 12: search.blank, tab.blank, recent_group_id.blank".yellowish
         @tab = nil
         current_user.update_recent_group_id("") #which defaults to the all tab
+        
+      else 
+        puts "CONT 13: signed in else".yellowish
+        @tab = nil
+      end  # end choosing the right tab
+      
+    else  # user not signed in
+    
+      # # | search | tab | tab == all | action
+      # 1 | yes    | yes | yes        | search for search term, should go to 'all' tab 
+      # 2 | yes    | yes | no         | search for search term, should go to specific tab
+      # 3 | yes    | no  | no         | search for search term, should go to 'all' tab
+      # 4 | no     | yes | yes        | go to 'all' tab
+      # 5 | no     | yes | no         | go to specific tab
+      # 6 | no     | no  | no         | go to 'all' tab
+      # 7 | yes    | no  | yes        | --not possible--
+      # 8 | no     | no  | yes        | --not possible--
+      
+      if (params[:sarch].present? && params[:tab].present? && params[:tab] == 'all')
+        # should: search for search term, should go to 'all' tab
+        puts "CONT 14: search.present, tab.present, tab == all".greenish
+        @tab = nil
+        
+      elsif (params[:sarch].present? && params[:tab].present? && params[:tab] != 'all')
+        # should: search for search term, should go to specific tab
+        puts "CONT 15: search.present, tab.present, tab != all".greenish
+        @tab = params[:tab]
+        
+      elsif (params[:sarch].present? && params[:tab].blank?)
+        # should: search for search term, should go to 'all' tab
+        puts "CONT 16: search.present, tab.blank".greenish
+        @tab = nil
+        
+      elsif (params[:sarch].blank? && params[:tab].present? && params[:tab] == 'all')
+        # should: go to 'all' tab
+        puts "CONT 17: search.blank, tab.present, tab == all".greenish
+        @tab = nil
+        
+      elsif (params[:sarch].blank? && params[:tab].present? && params[:tab] != 'all')
+        # should: go to specific tab
+        puts "CONT 18: search.blank, tab.present, tab != all".greenish
+        @tab = params[:tab]
+        
+      elsif (params[:sarch].blank? && params[:tab].blank?)
+        # should: go to 'all' tab
+        puts "CONT 19: search.blank, tab.blank".greenish
+        @tab = nil
         
       else
+        puts "CONT 20: not signed in else".greenish
+        @tab = nil
+      
       end
     end
     
-# options:
-# # | search | tab | tab == all | recent_group_id             | action
-# 1 | yes    | yes | yes        | yes                         | search for search term, should go to 'all' tab, set recent to 'all'
-# 2 | yes    | yes | yes        | no                          | search for search term, should go to 'all' tab, set recent to 'all'
-# 3 | yes    | yes | no         | yes                         | search for search term, should go to specific tab, set recent to specific tab
-# 4 | yes    | yes | no         | no                          | search for search term, should go to specific tab, set recent to specific tab
-# 5 | yes    | no  | no         | yes                         | search for search term, should go to recent group tab
-# 6 | yes    | no  | no         | no                          | search for search term, should go to 'all' tab, set recent to 'all'
-# 7 | no     | yes | yes        | yes                         | should go to 'all' tab, set recent to 'all'
-# 8 | no     | yes | yes        | no                          | should go to 'all' tab, set recent to 'all'
-# 9 | no     | yes | no         | yes                         | should go to specific tab, set recent to specific tab
-#10 | no     | yes | no         | no                          | should go to specific tab, set recent to specific tab
-#11 | no     | no  | no         | yes                         | should go to recent group tab
-
-# haven't made these yet
-#12 | no     | no  | no         | no                          | should go to 'all' tab, set recent to 'all'
-#   | yes    | no  | yes        | yes # can't actually happen |
-#   | yes    | no  | yes        | no  # can't actually happen |
-#   | no     | no  | yes        | yes # can't actually happen |
-#   | no     | no  | yes        | no  # can't actually happen |
 
     # give the view the correct list, depending on whether or not there's a URL param already 
     # included or the user has recently visited a specific group
@@ -163,6 +174,8 @@ require 'nokogiri'
   # GET /calls/1
   # GET /calls/1.xml
   def show
+    puts "\n--calls#show".yellowish
+    
     @call = Call.find(params[:id])
 
     respond_to do |format|
@@ -174,6 +187,8 @@ require 'nokogiri'
   # GET /calls/new
   # GET /calls/new.xml
   def new
+    puts "\n--calls#new".yellowish
+    
     @call = Call.new
 
     respond_to do |format|
@@ -184,12 +199,16 @@ require 'nokogiri'
 
   # GET /calls/1/edit
   def edit
+    puts "\n--calls#edit".yellowish
+    
     @call = Call.find(params[:id])
   end
 
   # POST /calls
   # POST /calls.xml
   def create
+    puts "\n--calls#create".yellowish
+    
     @call = Call.new(params[:call])
 
     respond_to do |format|
@@ -206,6 +225,8 @@ require 'nokogiri'
   # PUT /calls/1
   # PUT /calls/1.xml
   def update
+    puts "\ncalls#update".yellowish
+    
     @call = Call.find(params[:id])
 
     respond_to do |format|
@@ -222,6 +243,7 @@ require 'nokogiri'
   # DELETE /calls/1
   # DELETE /calls/1.xml
   def destroy
+    puts "\ncalls#destroy".yellowish
     @call = Call.find(params[:id])
     @call.destroy
 
@@ -233,6 +255,8 @@ require 'nokogiri'
 
 
   def make_request
+    puts "\ncalls#make_request".yellowish
+    
     @call = Call.find(params[:id])
     @common_params = CommonParam.all
 
@@ -284,6 +308,7 @@ require 'nokogiri'
 
     # Only if the user is signed in, add the call to the log
     if user_signed_in?
+      puts "CONT - make_request --- user is signed in".yellowish
       @new_log_entry = Log.new(
                           :method_name => @call.method_name, 
                           :user_id => current_user.id, 
@@ -292,7 +317,7 @@ require 'nokogiri'
                           :method_type => @call.method_type,
                           :endpoint_uri => @call.endpoint_uri
                           )
-      @new_log_entry.save
+      @new_log_entry.save!
     end
 
   end

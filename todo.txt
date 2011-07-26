@@ -10,7 +10,7 @@ x add grouping of APIs
   x don't forget that if groups are deleted, that those calls should do *something*, notify or delete
   x show tabs of groups
   + create a user field for last viewed group and show it first, if it is set, otherwise show the All tab
-    - update the field every time the user selects a different group to show
+    x update the field every time the user selects a different group to show
     - will have to clean the user table if a group is deleted (actually, it'll just show no methods if the user is taken there, and they'll likely click something else, setting a new recently_viewed_group)
   x search within a group, not all calls  
   x need to fix the tab styling still
@@ -30,6 +30,7 @@ x add logging of calls
 x add jQuery
 
 - add highlighting of common_params used in a hovered API call
+  + show the update form for all the common params used in the execution of the call, on the make_request page
 
 - add email server for recovering logins
 

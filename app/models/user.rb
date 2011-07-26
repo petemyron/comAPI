@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   def update_recent_group_id(id)
 #    puts "USER MOD: before #{self.recent_group_id}"
     self.recent_group_id = id
+    self.save!
 #    puts "USER MOD: after #{self.recent_group_id}"
   end
 end

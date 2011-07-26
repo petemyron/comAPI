@@ -14,7 +14,6 @@ class Call < ActiveRecord::Base
   end
   
   def self.search(search, tab)
-
     # options:
     #   | search | tab | tab == all | action         |
     # 1 | yes    | yes | yes        | search and all |
@@ -28,31 +27,36 @@ class Call < ActiveRecord::Base
     
     if (search.present? && tab.present? && tab == 'all')
       # should return search results in the 'all' tab
-      puts "\nMODEL 1: ==== search.present, tab.present, tab == all\n".blue
+      puts "MODEL 1: ==== search.present, tab.present, tab == all".blue
       where('method_name LIKE ?', "%#{search}%")
       
     elsif (search.present? && tab.present? && tab != "all")
       # should return search results in the respective tab
-      puts "\nMODEL 2: ==== search.present, tab.present, but!= all".blue
+      puts "MODEL 2: ==== search.present, tab.present, but!= all".blue
       where('method_name LIKE ? and group_id = ?', "%#{search}%", "#{Group.find_by_name(tab).id}")
     
-    elsif (search.present? && tab.nil?)
+    elsif (search.present? && tab.blank?)
       # should return search results in the 'all' tab
-      puts "\nMODEL 3: ==== search.present, tab.nil".blue
+      puts "MODEL 3: ==== search.present, tab.blank".blue
       where('method_name LIKE ?', "%#{search}%")
     
-    elsif (search.nil? && tab.present? && tab == "all")
+    elsif ((search.blank? || search == "" ) && tab.present? && tab == "all")
       # should return all calls in the 'all' tab
-      puts "\nMODEL 4: ==== search.nil, tab.present, tab == 'all'".blue
+      puts "MODEL 4: ==== search.blank, tab.present, tab == 'all'".blue
       scoped
     
-    elsif (search.nil? && tab.present? && tab != "all")
-      puts "\nMODEL 5: ==== search.nil, tab.present, tab != 'all'".blue
-      where('group_id = ?', "#{Group.find_by_name(tab).id}")
+    elsif ((search.blank? || search == "" ) && tab.present? && tab != "all")
+      puts "MODEL 5: ==== search.blank, tab.present, tab != 'all'".blue
+      group_id = Group.find_by_name(tab).id
+      where('group_id = ?', "#{group_id}")
     
-    else # (search.nil? && tab.nil?)
+    elsif ((search.blank? || search == "" ) && tab.blank?)
       # should return all calls in the 'all' tab
-      puts "\nMODEL 6: ==== search.nil, tab.nil".blue
+      puts "MODEL 6: ==== search.blank, tab.blank".blue
+      scoped
+      
+    else
+      puts "MODEL 7: ==== else".blue
       scoped
     
     end
