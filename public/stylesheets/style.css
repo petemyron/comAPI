@@ -11,6 +11,9 @@ body, p, ol, ul, td {
   line-height: 1em;
 }
 
+form { margin: 1em; }
+
+
 /* Navigation styling */
 
 /*#upper_nav { position: fixed; }*/
@@ -131,8 +134,6 @@ fieldset > legend {
 
 
 
-/* All other rails generated styles */
-
 div.field, div.actions {
   margin-bottom: 10px;
 }
@@ -209,4 +210,27 @@ p > div {
 
 .help { padding: 1em 0em; }
 .help:hover { background-color: #f9f9f9; }
+
+.pagination {
+  margin-top: 1em;
+  font-weight: bold;
+  font-size: .8em;
+}
+.pagination .disabled {
+  color: #999;
+  padding: .5em;
+}
+.pagination em {
+  color: #307DB1;
+  font-size: 1.5em;
+  padding: .5em;
+}
+.pagination a {
+  padding: .5em;
+}
+.next_page {
+  color: #444;
+  padding: .5em;
+}
+
 
